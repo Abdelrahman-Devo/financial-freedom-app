@@ -36,7 +36,7 @@ body{background:var(--bg);color:var(--ink);padding-bottom:calc(88px + env(safe-a
 .tabs{background:#172630f2;border-color:#2e414e;padding:9px 5px calc(8px + env(safe-area-inset-bottom))}.tab{color:#a3b3bd;font-size:10px;gap:5px}.tab b{font-size:21px}.tab.active{color:#75d2b2}.tab.active b{background:#29483e;border-radius:12px;padding:3px 13px}
 .modalbg{align-items:center;padding:18px}.modal{border-radius:23px;background:#1b2a36;border:1px solid #3a4e5c;padding:20px;max-height:88vh}.close{background:#344552;color:#edf4f4}
 .toast{bottom:calc(100px + env(safe-area-inset-bottom));background:#203b48}
-.income-settings{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:12px}.income-settings label{font-size:11px;color:#d1e5dc}.income-settings select{background:#ffffff18;color:#fff;border:1px solid #ffffff45;border-radius:11px;padding:8px 11px;min-height:36px}.income-settings select option{color:#172b3a;background:#fff}.income-settings span{font-size:10px;color:#c4ddd2}
+.income-settings{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:12px}.income-settings label{font-size:11px;color:#d1e5dc}.income-period{display:inline-flex;gap:4px;padding:3px;border:1px solid #ffffff38;border-radius:12px;background:#061f1c55}.period-option{border:0;border-radius:9px;padding:7px 11px;min-height:32px;background:transparent;color:#d1e5dc;font-size:12px;font-weight:750;white-space:nowrap;transition:background .15s,color .15s}.period-option.active{background:linear-gradient(135deg,#087f63,#16a085);color:#fff;box-shadow:0 2px 8px #001b1740}.income-settings span{font-size:10px;color:#c4ddd2}
 .month-picker-btn{width:100%;min-height:49px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 14px;border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);font-weight:800;text-align:right;box-shadow:0 5px 16px rgba(0,0,0,.1)}.month-picker-btn b{font-size:20px;color:#75d2b2;font-weight:500}.report-head{align-items:center;margin-top:24px;margin-bottom:18px}.report-head h2{font-size:20px}.report-month-btn{width:auto;min-width:160px;max-width:58%}
 .month-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:14px}.month-option{min-height:46px;border:1px solid var(--line);border-radius:13px;padding:10px 5px;background:#172630;color:var(--ink);font-size:13px;font-weight:750}.month-option.selected{background:#29483e;border-color:#61c8a5;color:#8be0c0}.year-switch{display:flex;align-items:center;justify-content:space-between;padding:8px 3px 11px}.year-switch strong{font-size:21px}.year-switch button{width:39px;height:39px;border:0;border-radius:12px;background:#293946;color:var(--ink);font-size:22px}
 #reportPage>.cards{gap:11px}#reportPage .stat{background:linear-gradient(145deg,#1b2a36,#203541)}#reportPage .stat strong{font-size:clamp(17px,4.5vw,21px);overflow-wrap:anywhere}#reportPage .panel{border-radius:20px;padding:17px}#reportPage .sectionhead:not(.report-head){margin-top:27px}
@@ -58,7 +58,7 @@ button:focus-visible,select:focus-visible,[role="button"]:focus-visible{outline:
 .hero{margin-top:20px}
 .income-settings{display:flex;align-items:center;justify-content:flex-start;gap:8px 10px;flex-wrap:wrap}
 .income-settings label{flex:0 0 auto;white-space:nowrap}
-.income-settings select{width:auto;min-width:0;max-width:48%;min-height:34px;padding:6px 28px 6px 10px;font-size:12px;line-height:1.2}
+.income-period{flex:0 0 auto;max-width:100%}.period-option{padding:6px 9px;font-size:11px}
 .income-settings span{flex:1 1 100%;line-height:1.6}
 .salaryline input{min-width:0;font-size:clamp(27px,8vw,34px)}
 .sectionhead{min-width:0}
@@ -76,11 +76,29 @@ button:focus-visible,select:focus-visible,[role="button"]:focus-visible{outline:
 .stat strong{line-height:1.3;overflow-wrap:anywhere}
 @media(max-width:390px){
  .toprow{gap:7px}.brand{font-size:18px;gap:7px}.logo{width:39px;height:39px}.top-actions{gap:5px}.topbtn{padding:7px 8px;font-size:10px}
- .hero{margin-top:17px}.income-settings{gap:7px}.income-settings select{max-width:52%}
+ .hero{margin-top:17px}.income-settings{gap:7px}.period-option{padding-inline:8px}
  .wrap{padding-inline:13px}.sectionhead{margin-inline:1px}
  .report-head{grid-template-columns:minmax(0,1fr) auto;gap:7px}.report-head h2{font-size:16px}.report-month-btn{padding-inline:8px;font-size:11px}
  .stat{padding:12px}.cat{padding:12px}
 }
+
+
+/* Final Android/WebView interaction polish */
+button, a, input, select, textarea, [role="button"] {
+  -webkit-tap-highlight-color: transparent !important;
+  tap-highlight-color: transparent;
+}
+button { -webkit-appearance: none; appearance: none; }
+button:focus, a:focus, input:focus, select:focus, textarea:focus, [role="button"]:focus {
+  -webkit-tap-highlight-color: transparent !important;
+}
+button:focus:not(:focus-visible), a:focus:not(:focus-visible),
+input:focus:not(:focus-visible), select:focus:not(:focus-visible),
+textarea:focus:not(:focus-visible), [role="button"]:focus:not(:focus-visible) {
+  outline: none !important;
+  box-shadow: none !important;
+}
+button::-moz-focus-inner { border: 0; }
 
 </style>
 </head>
@@ -90,7 +108,7 @@ button:focus-visible,select:focus-visible,[role="button"]:focus-visible{outline:
   <div><div class="brand"><span class="logo"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 24V8h4v12h4V13h4v7h4V5h4v19H5Z" fill="#fff" opacity=".28"/><path d="m7 21 7-7 5 3 7-9M20 8h6v6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>الحرية المالية</div><div class="sub">خطوة واعية نحو مستقبل أفضل</div></div>
   <div class="top-actions"><button class="topbtn" id="themeBtn" onclick="toggleTheme()" aria-label="تغيير المظهر">☾</button><button class="topbtn" onclick="openBudget()">توزيع الميزانية</button></div>
  </div>
- <div class="hero"><label id="incomeLabel">إجمالي دخلك الشهري</label><div class="salaryline"><input id="salary" type="number" min="0" step=".01" inputmode="decimal"><span>جنيه</span></div><div class="income-settings"><label for="salaryPeriod">طريقة احتساب الدخل</label><select id="salaryPeriod" aria-label="طريقة احتساب الدخل"><option value="monthly">دخل شهري</option><option value="daily">دخل يومي</option></select><span id="incomeHint">يُحتسب المبلغ كدخل شهري ثابت</span></div><div class="hint">يمكنك تعديل الدخل في أي وقت · بياناتك محفوظة على جهازك</div></div>
+ <div class="hero"><label id="incomeLabel">إجمالي دخلك الشهري</label><div class="salaryline"><input id="salary" type="number" min="0" step=".01" inputmode="decimal"><span>جنيه</span></div><div class="income-settings"><label>طريقة احتساب الدخل</label><div class="income-period" role="group" aria-label="طريقة احتساب الدخل"><button type="button" id="salaryMonthly" class="period-option" onclick="setSalaryPeriod('monthly')">دخل شهري</button><button type="button" id="salaryDaily" class="period-option" onclick="setSalaryPeriod('daily')">دخل يومي</button></div><span id="incomeHint">يُحتسب المبلغ كدخل شهري ثابت</span></div><div class="hint">يمكنك تعديل الدخل في أي وقت · بياناتك محفوظة على جهازك</div></div>
 </header>
 <main class="wrap">
 <section class="page active" id="homePage">
@@ -204,7 +222,7 @@ function goalSaved(g){return validNum(g.manualSaved)+allocatedForGoal(g.id);}
 function debtPaid(d){return state.paymentGroups.filter(g=>g.type===d.type).flatMap(g=>g.allocations||[]).filter(a=>String(a.debtId)===String(d.id)).reduce((s,a)=>s+validNum(a.amount),0);}
 function debtRemaining(d){return Math.max(0,d.total-debtPaid(d));}
 function renderAll(){
- document.getElementById('salary').value=state.salary;document.getElementById('salaryPeriod').value=state.salaryPeriod;document.getElementById('incomeLabel').textContent=state.salaryPeriod==='daily'?'دخلك اليومي':'إجمالي دخلك الشهري';document.getElementById('incomeHint').textContent=state.salaryPeriod==='daily'?'يُضرب الدخل اليومي في عدد أيام الشهر المحدد':'يُحتسب المبلغ كدخل شهري ثابت';
+ document.getElementById('salary').value=state.salary;document.getElementById('salaryMonthly').classList.toggle('active',state.salaryPeriod==='monthly');document.getElementById('salaryDaily').classList.toggle('active',state.salaryPeriod==='daily');document.getElementById('incomeLabel').textContent=state.salaryPeriod==='daily'?'دخلك اليومي':'إجمالي دخلك الشهري';document.getElementById('incomeHint').textContent=state.salaryPeriod==='daily'?'يُضرب الدخل اليومي في عدد أيام الشهر المحدد':'يُحتسب المبلغ كدخل شهري ثابت';
  const d=new Date();document.getElementById('monthLabel').textContent=d.toLocaleDateString('ar-EG',{month:'long',year:'numeric'});
  renderHome();renderExpenses();renderGoals();renderDebts();renderReport();renderHistory();
 }
@@ -223,7 +241,7 @@ function renderHome(){
  document.getElementById('debtQuick').textContent=cash(state.debts.filter(d=>d.type==='owed').reduce((s,d)=>s+debtRemaining(d),0));
 }
 document.getElementById('salary').addEventListener('change',e=>{state.salary=Math.max(0,validNum(e.target.value));save();renderAll();});
-document.getElementById('salaryPeriod').addEventListener('change',e=>{state.salaryPeriod=e.target.value==='daily'?'daily':'monthly';save();renderAll();toast(state.salaryPeriod==='daily'?'تم تفعيل احتساب الدخل اليومي':'تم تفعيل احتساب الدخل الشهري');});
+function setSalaryPeriod(period){state.salaryPeriod=period==='daily'?'daily':'monthly';save();renderAll();toast(state.salaryPeriod==='daily'?'تم تفعيل احتساب الدخل اليومي':'تم تفعيل احتساب الدخل الشهري');}
 function openBudget(){
  openModal('تعديل توزيع الميزانية',`<form id="budgetForm">${CATS.map(c=>`<div class="field"><label>${c.name} (%)</label><input type="number" min="0" max="100" step=".5" name="${c.id}" value="${state.budgets[c.id]}"></div>`).join('')}<div class="note" id="budgetTotal">المجموع الحالي: ${CATS.reduce((s,c)=>s+state.budgets[c.id],0)}%</div><div class="modal-actions"><button type="button" class="btn ghost" onclick="closeModal()">إلغاء</button><button class="btn primary">حفظ التوزيع</button></div></form>`);
  const form=document.getElementById('budgetForm'),total=()=>[...form.querySelectorAll('input')].reduce((s,i)=>s+validNum(i.value),0);
