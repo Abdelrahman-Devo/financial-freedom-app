@@ -178,7 +178,7 @@ body.dark .daily-date-button{background:linear-gradient(135deg,#ffffff18,#ffffff
 <section class="page" id="reportPage">
  <div class="sectionhead report-head"><h2>التقرير الشهري</h2><button type="button" class="month-picker-btn report-month-btn" id="reportMonthBtn" onclick="openMonthPicker('reportMonth')"><span id="reportMonthLabel"></span><b aria-hidden="true">⌄</b></button><input type="hidden" id="reportMonth"></div>
  <div class="cards"><div class="stat"><small>الدخل</small><strong id="rIncome">0</strong></div><div class="stat"><small>المصروفات</small><strong id="rSpent">0</strong></div><div class="stat"><small>المتبقي</small><strong id="rLeft">0</strong></div><div class="stat"><small>عدد العمليات</small><strong id="rCount">0</strong></div></div>
- <div class="sectionhead"><h2>الاستهلاك اليومي</h2><span class="muted">حسب تاريخ المصروف</span></div><div class="panel daily-chart-panel"><div id="dailySpendChart" role="img" aria-label="رسم بياني للاستهلاك اليومي"></div></div><div class="sectionhead"><h2>تفاصيل البنود</h2></div><div class="panel" id="rCats"></div><div class="sectionhead"><h2>مقارنة بالشهر السابق</h2></div><div class="panel" id="rCompare"></div>
+ <div class="sectionhead"><h2>تقرير الأيام</h2><span class="muted">كل يوم مستقل</span></div><div class="cards"><div class="stat"><small>إجمالي دخل الأيام</small><strong id="dailyReportIncome">0</strong></div><div class="stat"><small>مصروفات أيام الدخل</small><strong id="dailyReportSpent">0</strong></div><div class="stat"><small>المتبقي لأيام الدخل</small><strong id="dailyReportLeft">0</strong></div></div><div class="panel" id="dailyLedger"><div class="empty">لا توجد أيام مسجلة بعد.</div></div><div class="sectionhead"><h2>الاستهلاك اليومي</h2><span class="muted">حسب تاريخ المصروف</span></div><div class="panel daily-chart-panel"><div id="dailySpendChart" role="img" aria-label="رسم بياني للاستهلاك اليومي"></div></div><div class="sectionhead"><h2>تفاصيل البنود</h2></div><div class="panel" id="rCats"></div><div class="sectionhead"><h2>مقارنة بالشهر السابق</h2></div><div class="panel" id="rCompare"></div>
  <div class="no-print" style="height:16px"></div><button class="btn primary full no-print" onclick="window.print()">طباعة التقرير / حفظ PDF</button>
 </section>
 <section class="page" id="historyPage">
@@ -396,6 +396,23 @@ function renderReport(){
  const prev=previousMonth(reportMonth),prevTotal=state.expenses.filter(x=>monthKey(x.date)===prev).reduce((s,x)=>s+x.amount,0),diff=total-prevTotal;
  document.getElementById('rCompare').innerHTML=`<div class="small">مقارنة ${monthLabel(reportMonth)} مع ${monthLabel(prev)}</div><p>${!prevTotal&&!total?'لا توجد مصروفات في الشهرين.':!prevTotal?'مصروفات الشهر الحالي '+cash(total)+' ولا توجد مصروفات مسجلة في الشهر السابق.':`${diff>0?'زادت':'انخفضت'} المصروفات بمقدار ${cash(Math.abs(diff))} (${(Math.abs(diff)/prevTotal*100).toFixed(1)}%).`}</p><div class="small">الدخل المحتسب: ${state.salaryPeriod==='daily'?'مجموع الدخل المسجل لكل يوم: '+cash(income):cash(income)+' شهريًا'}.</div>`;
  renderDailySpendChart(rows,reportMonth);
+ renderDailyLedger(reportMonth,rows);
+}
+function renderDailyLedger(month, expenseRows){
+ const incomeEntries=Object.entries(state.dailyIncomes||{}).filter(([date])=>monthKey(date)===month);
+ const expenseByDate=new Map();
+ expenseRows.forEach(x=>expenseByDate.set(x.date,(expenseByDate.get(x.date)||0)+validNum(x.amount)));
+ const dates=[...new Set([...incomeEntries.map(([date])=>date),...expenseByDate.keys()])].sort();
+ const incomeMap=new Map(incomeEntries.map(([date,amount])=>[date,validNum(amount)]));
+ const dailyIncomeTotal=incomeEntries.reduce((sum,[,amount])=>sum+validNum(amount),0);
+ const spentOnIncomeDays=dates.filter(date=>incomeMap.has(date)).reduce((sum,date)=>sum+(expenseByDate.get(date)||0),0);
+ const allDailyExpenses=dates.reduce((sum,date)=>sum+(expenseByDate.get(date)||0),0);
+ const incomeEl=document.getElementById('dailyReportIncome'),spentEl=document.getElementById('dailyReportSpent'),leftEl=document.getElementById('dailyReportLeft'),host=document.getElementById('dailyLedger');
+ if(incomeEl)incomeEl.textContent=cash(dailyIncomeTotal);
+ if(spentEl)spentEl.textContent=cash(spentOnIncomeDays);
+ if(leftEl)leftEl.textContent=cash(dailyIncomeTotal-spentOnIncomeDays);
+ if(!host)return;
+ host.innerHTML=dates.length?`<div class="small" style="margin-bottom:10px">مصروفات الأيام التي سُجل لها دخل: ${cash(spentOnIncomeDays)} · إجمالي مصروفات كل أيام الشهر: ${cash(allDailyExpenses)}</div>${dates.slice().reverse().map(date=>{const income=incomeMap.get(date)||0,spent=expenseByDate.get(date)||0;return `<div class="listitem"><div class="split"><b>${formatArabicDate(date)}</b><span class="small">${incomeMap.has(date)?'يوم مسجل بدخل':'مصروفات فقط'}</span></div><div class="split small" style="margin-top:7px"><span>الدخل: <b>${cash(income)}</b></span><span>المصروفات: <b>${cash(spent)}</b></span></div><div class="split small"><span>المتبقي في اليوم</span><b style="color:${income-spent<0?'var(--red)':'var(--green)'}">${cash(income-spent)}</b></div></div>`;}).join('')}`:'<div class="empty">لا توجد دخول يومية أو مصروفات مسجلة في هذا الشهر.</div>';
 }
 document.getElementById('reportMonth').value=reportMonth;
 function renderHistory(){
