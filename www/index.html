@@ -28,9 +28,50 @@ body{background:linear-gradient(180deg,#eeece4 0,#f7f5ef 270px);color:var(--ink)
 <section class="page active" id="homePage"><div class="sectionhead"><h2>ملخص الشهر</h2><span class="muted" id="monthSub"></span></div><div class="summary"><div class="sumtop"><strong>توزيع الدخل</strong><span>كل جنيه له هدف</span></div><div class="bar" id="distributionBar"></div><div class="legend" id="legend"></div></div><div class="sectionhead"><h2>ميزانيتك</h2><span class="muted">المتاح بعد المصروفات</span></div><div class="cards" id="categoryCards"></div><div class="sectionhead"><h2>نظرة سريعة</h2></div><div class="panel"><div class="statgrid"><div class="stat"><small>إجمالي المصروفات</small><strong id="totalSpent">0 ج.م</strong></div><div class="stat"><small>المتبقي من دخلك</small><strong id="totalLeft">0 ج.م</strong></div></div><div class="note">قاعدة التطبيق: تسجيل المصروف يخصم من ميزانية البند المختار فقط. لو صرفت أكثر من المخصص، سيظهر البند بالسالب حتى تلاحظ التجاوز.</div></div></section>
 <section class="page" id="expensesPage"><div class="sectionhead"><h2>المصروفات</h2><button class="btn primary" onclick="openExpense()">＋ إضافة مصروف</button></div><div class="panel"><div class="row"><strong>مصروفات الشهر</strong><strong id="expenseTotal">0 ج.م</strong></div><div id="expenseList" class="empty">لسه مفيش مصروفات مسجلة.</div></div></section>
 <section class="page" id="goalsPage"><div class="sectionhead"><h2>أهداف الادخار</h2><button class="btn primary" onclick="openGoal()">＋ هدف جديد</button></div><div id="goalsList" class="panel empty">أنشئ هدفك الأول، مثل شراء لابتوب أو تكوين صندوق طوارئ.</div><div class="sectionhead"><h2>متابعة الديون</h2><button class="btn soft" onclick="openDebt()">＋ إضافة دين</button></div><div id="debtsList" class="panel empty">سجّل ديونك وتابع المبلغ المتبقي منها.</div></section>
+
+<section class="page" id="reportPage">
+  <div class="sectionhead">
+    <h2>التقرير الشهري</h2>
+    <input id="reportMonth" type="month" onchange="reportMonth=this.value;renderReport()">
+  </div>
+
+  <div class="cards">
+    <div class="panel">
+      <small class="muted">الدخل المسجل</small>
+      <div class="amount" id="reportIncome">0 ج.م</div>
+    </div>
+    <div class="panel">
+      <small class="muted">إجمالي المصروفات</small>
+      <div class="amount" id="reportSpent">0 ج.م</div>
+    </div>
+    <div class="panel">
+      <small class="muted">المتبقي</small>
+      <div class="amount" id="reportLeft">0 ج.م</div>
+    </div>
+    <div class="panel">
+      <small class="muted">عدد العمليات</small>
+      <div class="amount" id="reportCount">0</div>
+    </div>
+  </div>
+
+  <div class="sectionhead"><h2>توزيع المصروفات</h2></div>
+  <div class="panel" id="reportCategories"></div>
+
+  <div class="sectionhead"><h2>أكبر مصروف</h2></div>
+  <div class="panel" id="reportTopExpense"></div>
+
+  <div class="sectionhead"><h2>مقارنة بالشهر السابق</h2></div>
+  <div class="panel" id="reportComparison"></div>
+
+  <button class="btn soft full" onclick="window.print()">
+    طباعة التقرير / حفظ PDF
+  </button>
+</section>
+  
 <section class="page" id="historyPage"><div class="sectionhead"><h2>السجل المالي</h2><span class="muted">الشهر الحالي</span></div><div class="panel"><div class="statgrid"><div class="stat"><small>الدخل المسجل</small><strong id="histIncome">0 ج.م</strong></div><div class="stat"><small>عدد العمليات</small><strong id="histCount">0</strong></div></div><div id="historyList" class="empty">ستظهر عملياتك هنا.</div></div><div class="sectionhead"><h2>بياناتك</h2></div><div class="panel"><p class="small">بياناتك محفوظة محليًا على هذا الجهاز والمتصفح، ولا يتم إرسالها إلى خادم.</p><button class="btn soft full" onclick="exportData()">تصدير نسخة احتياطية</button><div style="height:9px"></div><button class="btn danger full" onclick="resetData()">مسح كل البيانات</button></div></section>
 </main>
-<nav class="tabs"><button class="tab active" data-page="homePage" onclick="showPage('homePage',this)"><b>⌂</b>الرئيسية</button><button class="tab" data-page="expensesPage" onclick="showPage('expensesPage',this)"><b>＋</b>المصروفات</button><button class="tab" data-page="goalsPage" onclick="showPage('goalsPage',this)"><b>◎</b>الأهداف والديون</button><button class="tab" data-page="historyPage" onclick="showPage('historyPage',this)"><b>▤</b>السجل</button></nav>
+<nav class="tabs"><button class="tab" data-page="reportPage" onclick="showPage('reportPage',this)"><b>▥</b>التقرير</button>
+<button class="tab" data-page="historyPage" onclick="showPage('historyPage',this)"><b>▤</b>السجل</button><button class="tab" data-page="expensesPage" onclick="showPage('expensesPage',this)"><b>＋</b>المصروفات</button><button class="tab" data-page="goalsPage" onclick="showPage('goalsPage',this)"><b>◎</b>الأهداف والديون</button><button class="tab" data-page="historyPage" onclick="showPage('historyPage',this)"><b>▤</b>السجل</button></nav>
 <div class="modalbg" id="modalBg" onclick="if(event.target===this)closeModal()"><div class="modal"><div class="row"><h3 id="modalTitle">إضافة</h3><button class="close" onclick="closeModal()">×</button></div><div id="modalContent"></div></div></div><div class="toast" id="toast"></div>
 <script>
 const cats=[{id:'needs',name:'الأساسيات',pct:55,icon:'⌂',color:'#24866d',bg:'#e9f5f0'},{id:'fun',name:'الرفاهية',pct:5,icon:'✧',color:'#c99535',bg:'#fbf4e6'},{id:'debt',name:'الديون',pct:10,icon:'▣',color:'#c96c70',bg:'#faeded'},{id:'saving',name:'الادخار',pct:15,icon:'▤',color:'#668bb8',bg:'#edf2f8'},{id:'invest',name:'الاستثمار',pct:10,icon:'↗',color:'#8878ad',bg:'#f1eef7'},{id:'charity',name:'الصدقات',pct:5,icon:'♡',color:'#c58b6c',bg:'#f8eee7'}];
