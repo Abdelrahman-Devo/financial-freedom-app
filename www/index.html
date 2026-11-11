@@ -118,3 +118,153 @@ function saveExpenseEdit(e,id){
 
 function deleteExpense(id){
   if(!confirm('هل أنت متأكد من حذف هذا المصروف؟'))retur
+n;
+
+  state.expenses=state.expenses.filter(x=>x.id!==id);
+  save();
+  render();
+  toast('تم حذف المصروف');
+}
+
+function openGoal(){
+  openModal('هدف ادخار جديد',`<form onsubmit="addGoal(event)">
+    <div class="field"><label>اسم الهدف</label><input id="gName" required placeholder="مثال: لابتوب"></div>
+    <div class="field"><label>المبلغ المستهدف</label><input id="gTarget" type="number" min="1" required placeholder="0"></div>
+    <div class="field"><label>المبلغ الذي ادخرته بالفعل</label><input id="gSaved" type="number" min="0" value="0"></div>
+    <button class="btn primary full">حفظ الهدف</button>
+  </form>`);
+}
+
+function addGoal(e){
+  e.preventDefault();
+  state.goals.push({
+    id:Date.now(),
+    name:document.getElementById('gName').value.trim(),
+    target:+document.getElementById('gTarget').value,
+    saved:+document.getElementById('gSaved').value
+  });
+  save();closeModal();render();toast('تم إضافة الهدف');
+}
+
+function updateGoal(id){
+  let g=state.goals.find(x=>x.id===id);
+  let n=prompt('أدخل إجمالي المبلغ الذي ادخرته حتى الآن',g.saved);
+  if(n===null)return;
+  if(!Number.isFinite(+n)||+n<0)return toast('أدخل مبلغًا صحيحًا');
+  g.saved=+n;save();render();
+}
+
+function removeGoal(id){
+  state.goals=state.goals.filter(x=>x.id!==id);
+  save();render();
+}
+
+function renderGoals(){
+  let el=document.getElementById('goalsList');
+  el.className=state.goals.length?'panel':'panel empty';
+  el.innerHTML=state.goals.length?state.goals.map(g=>{
+    let p=Math.min(100,g.saved/g.target*100);
+    return `<div class="listitem">
+      <div class="row"><strong>${esc(g.name)}</strong>
+      <button class="close" onclick="removeGoal(${g.id})">×</button></div>
+      <div class="row small" style="margin-top:8px">
+        <span>${cash(g.saved)} من ${cash(g.target)}</span><b>${p.toFixed(0)}%</b>
+      </div>
+      <div class="goalbar"><i style="width:${p}%"></i></div>
+      <button class="btn soft" onclick="updateGoal(${g.id})">تحديث المدخرات</button>
+    </div>`;
+  }).join(''):'أنشئ هدفك الأول، مثل شراء لابتوب أو تكوين صندوق طوارئ.';
+
+  let d=document.getElementById('debtsList');
+  d.className=state.debts.length?'panel':'panel empty';
+  d.innerHTML=state.debts.length?state.debts.map(x=>`
+    <div class="listitem">
+      <div class="row"><strong>${esc(x.name)}</strong>
+      <button class="close" onclick="removeDebt(${x.id})">×</button></div>
+      <div class="small" style="margin-top:6px">المتبقي: ${cash(x.remaining)} من ${cash(x.total)}</div>
+      <div class="goalbar"><i style="width:${Math.max(0,Math.min(100,(1-x.remaining/x.total)*100))}%;background:var(--red)"></i></div>
+      <button class="btn soft" onclick="payDebt(${x.id})">تسجيل سداد</button>
+    </div>`).join(''):'سجّل ديونك وتابع المبلغ المتبقي منها.';
+}
+
+function openDebt(){
+  openModal('إضافة دين',`<form onsubmit="addDebt(event)">
+    <div class="field"><label>اسم الدين أو الجهة</label><input id="dName" required placeholder="مثال: قسط جهاز"></div>
+    <div class="field"><label>إجمالي الدين</label><input id="dTotal" type="number" min="1" required></div>
+    <div class="field"><label>المبلغ المتبقي</label><input id="dRemain" type="number" min="0" required></div>
+    <button class="btn primary full">حفظ الدين</button>
+  </form>`);
+}
+
+function addDebt(e){
+  e.preventDefault();
+  let total=+document.getElementById('dTotal').value;
+  let remaining=+document.getElementById('dRemain').value;
+  if(remaining>total)return toast('المتبقي لا يمكن أن يتجاوز إجمالي الدين');
+  state.debts.push({
+    id:Date.now(),
+    name:document.getElementById('dName').value,
+    total,remaining
+  });
+  save();closeModal();render();toast('تم إضافة الدين');
+}
+
+function payDebt(id){
+  let d=state.debts.find(x=>x.id===id);
+  let n=prompt('قيمة المبلغ المسدد','0');
+  if(n===null)return;
+  if(+n<=0||!Number.isFinite(+n))return toast('أدخل مبلغًا صحيحًا');
+  d.remaining=Math.max(0,d.remaining-(+n));
+  save();render();toast('تم تحديث الدين');
+}
+
+function removeDebt(id){
+  state.debts=state.debts.filter(x=>x.id!==id);
+  save();render();
+}
+
+function renderHistory(){
+  document.getElementById('histIncome').textContent=cash(state.salary);
+  document.getElementById('histCount').textContent=monthExpenses().length;
+  let arr=monthExpenses(),el=document.getElementById('historyList');
+  el.className=arr.length?'':'empty';
+  el.innerHTML=arr.length?arr.map(x=>{
+    let c=cats.find(c=>c.id===x.cat);
+    return `<div class="listitem row">
+      <div><strong style="font-size:13px">${esc(x.name)}</strong>
+      <div class="small">${x.date} · ${c?.name||''}</div></div>
+      <div class="row" style="gap:8px">
+        <b style="font-size:13px">− ${cash(x.amount)}</b>
+        <button class="btn soft" onclick="openEditExpense(${x.id})">تعديل</button>
+        <button class="close" onclick="deleteExpense(${x.id})">×</button>
+      </div>
+    </div>`;
+  }).join(''):'ستظهر عملياتك هنا.';
+}
+
+function exportData(){
+  let blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  let url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download='financial-freedom-backup.json';
+  a.click();URL.revokeObjectURL(url);toast('تم تجهيز النسخة الاحتياطية');
+}
+
+function resetData(){
+  if(confirm('متأكد إنك عايز تمسح كل بياناتك؟ لا يمكن التراجع.')){
+    state={salary:0,expenses:[],goals:[],debts:[]};
+    save();render();toast('تم مسح البيانات');
+  }
+}
+
+function esc(s){
+  return String(s).replace(/[&<>"']/g,c=>({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+}
+
+document.getElementById('salary').value=state.salary;
+render();
+</script>
+</body>
+</html>
+
