@@ -100,6 +100,21 @@ textarea:focus:not(:focus-visible), [role="button"]:focus:not(:focus-visible) {
 }
 button::-moz-focus-inner { border: 0; }
 
+
+/* Daily income and report chart refinements */
+#themeBtn{width:44px;height:44px;min-width:44px;padding:7px;font-size:0;border-radius:14px}
+#themeBtn svg{width:25px;height:25px;display:block}
+.daily-income-date{margin:10px 0 0;max-width:220px}
+.daily-income-date[hidden]{display:none!important}
+.daily-income-date input{padding:8px 10px;border:1px solid #ffffff55;border-radius:10px;background:#ffffff16;color:#fff;color-scheme:dark}
+.daily-chart-panel{overflow:hidden}
+.daily-chart-scroll{overflow-x:auto;direction:ltr;padding:4px 0 8px;scrollbar-width:thin}
+.daily-chart-svg{display:block;min-width:100%;height:auto}
+.daily-chart-svg text{font-family:system-ui,Tahoma,Arial,sans-serif;fill:var(--muted);font-size:10px}
+.daily-chart-svg .bar{fill:#16a085}
+.daily-chart-svg .bar.today{fill:#d9a441}
+.daily-chart-empty{padding:22px 8px;text-align:center;color:var(--muted);font-size:12px}
+.period-option{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 </style>
 </head>
 <body>
@@ -108,7 +123,7 @@ button::-moz-focus-inner { border: 0; }
   <div><div class="brand"><span class="logo"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 24V8h4v12h4V13h4v7h4V5h4v19H5Z" fill="#fff" opacity=".28"/><path d="m7 21 7-7 5 3 7-9M20 8h6v6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>الحرية المالية</div><div class="sub">خطوة واعية نحو مستقبل أفضل</div></div>
   <div class="top-actions"><button class="topbtn" id="themeBtn" onclick="toggleTheme()" aria-label="تغيير المظهر">☾</button><button class="topbtn" onclick="openBudget()">توزيع الميزانية</button></div>
  </div>
- <div class="hero"><label id="incomeLabel">إجمالي دخلك الشهري</label><div class="salaryline"><input id="salary" type="number" min="0" step=".01" inputmode="decimal"><span>جنيه</span></div><div class="income-settings"><label>طريقة احتساب الدخل</label><div class="income-period" role="group" aria-label="طريقة احتساب الدخل"><button type="button" id="salaryMonthly" class="period-option" onclick="setSalaryPeriod('monthly')">دخل شهري</button><button type="button" id="salaryDaily" class="period-option" onclick="setSalaryPeriod('daily')">دخل يومي</button></div><span id="incomeHint">يُحتسب المبلغ كدخل شهري ثابت</span></div><div class="hint">يمكنك تعديل الدخل في أي وقت · بياناتك محفوظة على جهازك</div></div>
+ <div class="hero"><label id="incomeLabel">إجمالي دخلك الشهري</label><div class="salaryline"><input id="salary" type="number" min="0" step=".01" inputmode="decimal"><span>جنيه</span></div><div id="dailyIncomeDateWrap" class="field daily-income-date" hidden><label for="dailyIncomeDate">تاريخ الدخل</label><input id="dailyIncomeDate" type="date" dir="ltr"></div><div class="income-settings"><label>طريقة احتساب الدخل</label><div class="income-period" role="group" aria-label="طريقة احتساب الدخل"><button type="button" id="salaryMonthly" data-period="monthly" class="period-option">دخل شهري</button><button type="button" id="salaryDaily" data-period="daily" class="period-option">دخل يومي</button></div><span id="incomeHint">يُحتسب المبلغ كدخل شهري ثابت</span></div><div class="hint">يمكنك تعديل الدخل في أي وقت · بياناتك محفوظة على جهازك</div></div>
 </header>
 <main class="wrap">
 <section class="page active" id="homePage">
@@ -135,7 +150,7 @@ button::-moz-focus-inner { border: 0; }
 <section class="page" id="reportPage">
  <div class="sectionhead report-head"><h2>التقرير الشهري</h2><button type="button" class="month-picker-btn report-month-btn" id="reportMonthBtn" onclick="openMonthPicker('reportMonth')"><span id="reportMonthLabel"></span><b aria-hidden="true">⌄</b></button><input type="hidden" id="reportMonth"></div>
  <div class="cards"><div class="stat"><small>الدخل</small><strong id="rIncome">0</strong></div><div class="stat"><small>المصروفات</small><strong id="rSpent">0</strong></div><div class="stat"><small>المتبقي</small><strong id="rLeft">0</strong></div><div class="stat"><small>عدد العمليات</small><strong id="rCount">0</strong></div></div>
- <div class="sectionhead"><h2>تفاصيل البنود</h2></div><div class="panel" id="rCats"></div><div class="sectionhead"><h2>مقارنة بالشهر السابق</h2></div><div class="panel" id="rCompare"></div>
+ <div class="sectionhead"><h2>الاستهلاك اليومي</h2><span class="muted">حسب تاريخ المصروف</span></div><div class="panel daily-chart-panel"><div id="dailySpendChart" role="img" aria-label="رسم بياني للاستهلاك اليومي"></div></div><div class="sectionhead"><h2>تفاصيل البنود</h2></div><div class="panel" id="rCats"></div><div class="sectionhead"><h2>مقارنة بالشهر السابق</h2></div><div class="panel" id="rCompare"></div>
  <div class="no-print" style="height:16px"></div><button class="btn primary full no-print" onclick="window.print()">طباعة التقرير / حفظ PDF</button>
 </section>
 <section class="page" id="historyPage">
@@ -168,12 +183,12 @@ const CATS=[
 ];
 const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}, monthKey=(d=today())=>String(d).slice(0,7), uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
 let state=loadState(), expenseMonth=monthKey(), reportMonth=monthKey(), toastTimer;
-function defaultState(){return {version:3,salary:15000,salaryPeriod:'monthly',budgets:Object.fromEntries(CATS.map(c=>[c.id,c.pct])),expenses:[],goals:[],debts:[],paymentGroups:[]};}
+function defaultState(){return {version:4,salary:15000,salaryPeriod:'monthly',dailyIncomes:{},budgets:Object.fromEntries(CATS.map(c=>[c.id,c.pct])),expenses:[],goals:[],debts:[],paymentGroups:[]};}
 function loadState(){
  try{
   const raw=JSON.parse(localStorage.getItem(KEY)||'null'); if(!raw||typeof raw!=='object')return defaultState();
   const s=defaultState(); Object.assign(s,raw);
-  s.salary=validNum(raw.salary,15000); s.salaryPeriod=raw.salaryPeriod==='daily'?'daily':'monthly'; s.expenses=Array.isArray(raw.expenses)?raw.expenses.map(normalizeExpense).filter(Boolean):[];
+  s.salary=validNum(raw.salary,15000); s.salaryPeriod=raw.salaryPeriod==='daily'?'daily':'monthly'; s.dailyIncomes=raw.dailyIncomes&&typeof raw.dailyIncomes==='object'&&!Array.isArray(raw.dailyIncomes)?Object.fromEntries(Object.entries(raw.dailyIncomes).filter(([k,v])=>/^\d{4}-\d{2}-\d{2}$/.test(k)&&Number.isFinite(Number(v))&&Number(v)>=0).map(([k,v])=>[k,Number(v)])):{}; if(raw.salaryPeriod==='daily'&&!raw.dailyIncomes)s.dailyIncomes[today()]=s.salary; s.expenses=Array.isArray(raw.expenses)?raw.expenses.map(normalizeExpense).filter(Boolean):[];
   s.goals=Array.isArray(raw.goals)?raw.goals.map(g=>({id:String(g.id??uid()),name:String(g.name||'هدف بدون اسم'),target:Math.max(0,validNum(g.target,0)),manualSaved:Math.max(0,validNum(g.manualSaved,validNum(g.saved,0)))})): [];
   s.budgets={...s.budgets,...(raw.budgets||{})};
   CATS.forEach(c=>s.budgets[c.id]=validNum(s.budgets[c.id],c.pct));
@@ -184,7 +199,7 @@ function loadState(){
    raw.debts?.forEach(d=>{if(d&&d.id!=null&&Number.isFinite(+d.total)&&Number.isFinite(+d.remaining)){let paid=Math.max(0,+d.total-(+d.remaining));if(paid>0)s.paymentGroups.push({id:uid(),type:'owed',date:d.createdAt||today(),note:'رصيد سابق قبل تحديث التطبيق',allocations:[{debtId:String(d.id),amount:paid}]});}});
   }
   s.expenses.forEach(x=>{if(x.cat==='saving'&&!x.savingMode)x.savingMode='equal';if(!Array.isArray(x.allocations))x.allocations=[];});
-  s.version=3; return s;
+  s.version=4; return s;
  }catch(e){return defaultState();}
 }
 function normalizeExpense(x){
@@ -215,14 +230,14 @@ function showPage(id,btn){document.querySelectorAll('.page').forEach(p=>p.classL
 function monthExpenses(m=expenseMonth){return state.expenses.filter(x=>monthKey(x.date)===m);}
 function categorySpent(id,m=monthKey()){return state.expenses.filter(x=>monthKey(x.date)===m&&x.cat===id).reduce((a,x)=>a+x.amount,0);}
 function daysInMonth(m=monthKey()){const [y,mo]=String(m).split('-').map(Number);return new Date(y,mo,0).getDate();}
-function incomeForMonth(m=monthKey()){return state.salaryPeriod==='daily'?state.salary*daysInMonth(m):state.salary;}
+function incomeForMonth(m=monthKey()){if(state.salaryPeriod!=='daily')return state.salary;const keys=Object.keys(state.dailyIncomes||{}).filter(d=>monthKey(d)===m);return keys.reduce((sum,d)=>sum+validNum(state.dailyIncomes[d]),0);}
 function budget(c,m=monthKey()){return incomeForMonth(m)*validNum(state.budgets[c.id],c.pct)/100;}
 function allocatedForGoal(id){return state.expenses.filter(x=>x.cat==='saving').flatMap(x=>x.allocations||[]).filter(a=>String(a.goalId)===String(id)).reduce((s,a)=>s+validNum(a.amount),0);}
 function goalSaved(g){return validNum(g.manualSaved)+allocatedForGoal(g.id);}
 function debtPaid(d){return state.paymentGroups.filter(g=>g.type===d.type).flatMap(g=>g.allocations||[]).filter(a=>String(a.debtId)===String(d.id)).reduce((s,a)=>s+validNum(a.amount),0);}
 function debtRemaining(d){return Math.max(0,d.total-debtPaid(d));}
 function renderAll(){
- document.getElementById('salary').value=state.salary;document.getElementById('salaryMonthly').classList.toggle('active',state.salaryPeriod==='monthly');document.getElementById('salaryDaily').classList.toggle('active',state.salaryPeriod==='daily');document.getElementById('incomeLabel').textContent=state.salaryPeriod==='daily'?'دخلك اليومي':'إجمالي دخلك الشهري';document.getElementById('incomeHint').textContent=state.salaryPeriod==='daily'?'يُضرب الدخل اليومي في عدد أيام الشهر المحدد':'يُحتسب المبلغ كدخل شهري ثابت';
+ const dailyMode=state.salaryPeriod==='daily',dailyDate=document.getElementById('dailyIncomeDate').value||today();document.getElementById('dailyIncomeDateWrap').hidden=!dailyMode;document.getElementById('dailyIncomeDate').value=dailyDate;document.getElementById('salary').value=dailyMode?(state.dailyIncomes[dailyDate]??''):state.salary;document.getElementById('salary').placeholder=dailyMode?'دخل هذا اليوم':'الدخل الشهري';document.getElementById('salaryMonthly').classList.toggle('active',!dailyMode);document.getElementById('salaryDaily').classList.toggle('active',dailyMode);document.getElementById('incomeLabel').textContent=dailyMode?'دخل اليوم المحدد':'إجمالي دخلك الشهري';document.getElementById('incomeHint').textContent=dailyMode?'سجّل دخل كل يوم على حدة؛ إجمالي الشهر هو مجموع الأيام المسجلة':'يُحتسب المبلغ كدخل شهري ثابت';
  const d=new Date();document.getElementById('monthLabel').textContent=d.toLocaleDateString('ar-EG',{month:'long',year:'numeric'});
  renderHome();renderExpenses();renderGoals();renderDebts();renderReport();renderHistory();
 }
@@ -240,8 +255,11 @@ function renderHome(){
  document.getElementById('goalQuick').textContent=state.goals.filter(g=>goalSaved(g)<g.target).length;
  document.getElementById('debtQuick').textContent=cash(state.debts.filter(d=>d.type==='owed').reduce((s,d)=>s+debtRemaining(d),0));
 }
-document.getElementById('salary').addEventListener('change',e=>{state.salary=Math.max(0,validNum(e.target.value));save();renderAll();});
-function setSalaryPeriod(period){state.salaryPeriod=period==='daily'?'daily':'monthly';save();renderAll();toast(state.salaryPeriod==='daily'?'تم تفعيل احتساب الدخل اليومي':'تم تفعيل احتساب الدخل الشهري');}
+document.getElementById('salary').addEventListener('change',e=>{const amount=Math.max(0,validNum(e.target.value));if(state.salaryPeriod==='daily'){const date=document.getElementById('dailyIncomeDate').value||today();state.dailyIncomes[date]=amount;}else{state.salary=amount;}save();renderAll();});
+document.getElementById('dailyIncomeDate').addEventListener('change',e=>{const date=e.target.value;if(!/^\d{4}-\d{2}-\d{2}$/.test(date))return;document.getElementById('salary').value=state.dailyIncomes[date]??'';document.getElementById('incomeLabel').textContent='دخل يوم '+date;});
+document.getElementById('salaryMonthly').addEventListener('click',()=>setSalaryPeriod(document.getElementById('salaryMonthly').dataset.period));
+document.getElementById('salaryDaily').addEventListener('click',()=>setSalaryPeriod(document.getElementById('salaryDaily').dataset.period));
+function setSalaryPeriod(period){if(period!=='daily'&&period!=='monthly')return;state.salaryPeriod=period;save();renderAll();toast(period==='daily'?'تم تفعيل تسجيل الدخل اليومي':'تم تفعيل الدخل الشهري');}
 function openBudget(){
  openModal('تعديل توزيع الميزانية',`<form id="budgetForm">${CATS.map(c=>`<div class="field"><label>${c.name} (%)</label><input type="number" min="0" max="100" step=".5" name="${c.id}" value="${state.budgets[c.id]}"></div>`).join('')}<div class="note" id="budgetTotal">المجموع الحالي: ${CATS.reduce((s,c)=>s+state.budgets[c.id],0)}%</div><div class="modal-actions"><button type="button" class="btn ghost" onclick="closeModal()">إلغاء</button><button class="btn primary">حفظ التوزيع</button></div></form>`);
  const form=document.getElementById('budgetForm'),total=()=>[...form.querySelectorAll('input')].reduce((s,i)=>s+validNum(i.value),0);
@@ -332,6 +350,9 @@ function renderDebts(){
 }
 function previousMonth(m){let [y,mo]=m.split('-').map(Number),d=new Date(y,mo-2,1);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');}
 function monthLabel(m){let [y,mo]=m.split('-').map(Number);return new Date(y,mo-1,1).toLocaleDateString('ar-EG',{month:'long',year:'numeric'});}
+function renderDailySpendChart(rows,m){
+ const host=document.getElementById('dailySpendChart');if(!host)return;const count=daysInMonth(m),daily=Array.from({length:count},(_,i)=>({day:i+1,total:0}));rows.forEach(x=>{const d=Number(String(x.date).slice(8,10));if(d>=1&&d<=count)daily[d-1].total+=validNum(x.amount);});const max=Math.max(1,...daily.map(x=>x.total));const width=Math.max(320,count*19+36),height=176,left=26,right=8,top=12,bottom=28,plotH=height-top-bottom,slot=(width-left-right)/count,barW=Math.max(4,slot*.62);const bars=daily.map(x=>{const h=x.total?Math.max(2,x.total/max*plotH):0,xp=left+(x.day-1)*slot+(slot-barW)/2,yp=top+plotH-h;return `<rect class="bar ${m+'-'+String(x.day).padStart(2,'0')===today()?'today':''}" x="${xp.toFixed(1)}" y="${yp.toFixed(1)}" width="${barW.toFixed(1)}" height="${h.toFixed(1)}" rx="3"><title>يوم ${x.day}: ${cash(x.total)}</title></rect>${(x.day===1||x.day%5===0||x.day===count)?`<text x="${(left+(x.day-.5)*slot).toFixed(1)}" y="${height-8}" text-anchor="middle">${x.day}</text>`:''}`;}).join('');const grid=[0,.5,1].map(t=>{const y=top+plotH*(1-t);return `<line x1="${left}" y1="${y}" x2="${width-right}" y2="${y}" stroke="var(--line)" stroke-dasharray="3 4"/><text x="${left-5}" y="${y+3}" text-anchor="end">${fmt(max*t)}</text>`;}).join('');host.innerHTML=rows.length?`<div class="daily-chart-scroll"><svg class="daily-chart-svg" viewBox="0 0 ${width} ${height}" style="width:${width}px" xmlns="http://www.w3.org/2000/svg">${grid}${bars}</svg></div><div class="small" style="text-align:center">الأرقام أسفل الأعمدة هي أيام الشهر · ارتفاع العمود يوضح قيمة مصروفات اليوم</div>`:'<div class="daily-chart-empty">لا توجد مصروفات مسجلة في هذا الشهر لعرض الرسم البياني.</div>';
+}
 function renderReport(){
  const input=document.getElementById('reportMonth');if(input&&input.value!==reportMonth)input.value=reportMonth;const monthLabelEl=document.getElementById('reportMonthLabel');if(monthLabelEl)monthLabelEl.textContent=monthText(reportMonth);
  const rows=state.expenses.filter(x=>monthKey(x.date)===reportMonth),total=rows.reduce((s,x)=>s+x.amount,0),income=incomeForMonth(reportMonth);
@@ -339,7 +360,8 @@ function renderReport(){
  const groups=CATS.map(c=>({c,amount:rows.filter(x=>x.cat===c.id).reduce((s,x)=>s+x.amount,0)})).filter(x=>x.amount>0).sort((a,b)=>b.amount-a.amount);
  document.getElementById('rCats').innerHTML=groups.length?groups.map(x=>`<div style="margin-bottom:14px"><div class="split"><b>${x.c.name}</b><span>${cash(x.amount)} · ${total?(x.amount/total*100).toFixed(1):0}%</span></div><div class="chartline"><i style="width:${total?x.amount/total*100:0}%;background:${x.c.color}"></i></div></div>`).join(''):'<div class="empty">لا توجد مصروفات في هذا الشهر.</div>';
  const prev=previousMonth(reportMonth),prevTotal=state.expenses.filter(x=>monthKey(x.date)===prev).reduce((s,x)=>s+x.amount,0),diff=total-prevTotal;
- document.getElementById('rCompare').innerHTML=`<div class="small">مقارنة ${monthLabel(reportMonth)} مع ${monthLabel(prev)}</div><p>${!prevTotal&&!total?'لا توجد مصروفات في الشهرين.':!prevTotal?'مصروفات الشهر الحالي '+cash(total)+' ولا توجد مصروفات مسجلة في الشهر السابق.':`${diff>0?'زادت':'انخفضت'} المصروفات بمقدار ${cash(Math.abs(diff))} (${(Math.abs(diff)/prevTotal*100).toFixed(1)}%).`}</p><div class="small">الدخل المحتسب: ${state.salaryPeriod==='daily'?cash(state.salary)+' يوميًا × '+daysInMonth(reportMonth)+' يومًا':cash(income)+' شهريًا'}.</div>`;
+ document.getElementById('rCompare').innerHTML=`<div class="small">مقارنة ${monthLabel(reportMonth)} مع ${monthLabel(prev)}</div><p>${!prevTotal&&!total?'لا توجد مصروفات في الشهرين.':!prevTotal?'مصروفات الشهر الحالي '+cash(total)+' ولا توجد مصروفات مسجلة في الشهر السابق.':`${diff>0?'زادت':'انخفضت'} المصروفات بمقدار ${cash(Math.abs(diff))} (${(Math.abs(diff)/prevTotal*100).toFixed(1)}%).`}</p><div class="small">الدخل المحتسب: ${state.salaryPeriod==='daily'?'مجموع الدخل المسجل لكل يوم: '+cash(income):cash(income)+' شهريًا'}.</div>`;
+ renderDailySpendChart(rows,reportMonth);
 }
 document.getElementById('reportMonth').value=reportMonth;
 function renderHistory(){
@@ -349,7 +371,7 @@ function renderHistory(){
 function exportBackup(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='financial-freedom-backup-'+today()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('تم تصدير النسخة الاحتياطية');}
 function importBackup(e){const file=e.target.files?.[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const incoming=JSON.parse(reader.result);if(!incoming||typeof incoming!=='object'||!Array.isArray(incoming.expenses)||!Array.isArray(incoming.goals)||!Array.isArray(incoming.debts))throw new Error('invalid');confirmModal('استيراد النسخة الاحتياطية','سيتم استبدال البيانات الحالية بالبيانات الموجودة في الملف. يُفضّل تصدير نسخة احتياطية أولًا. هل تريد المتابعة؟',()=>{try{localStorage.setItem(KEY,JSON.stringify(incoming));state=loadState();save();renderAll();toast('تم استيراد البيانات بنجاح');}catch(err){toast('تعذر استيراد النسخة');}},'استيراد واستبدال');}catch(err){toast('الملف غير صالح أو ليس نسخة من التطبيق');}e.target.value='';};reader.readAsText(file);}
 function confirmReset(){confirmModal('حذف جميع البيانات','سيتم حذف الدخل والمصروفات والأهداف والديون وسجل الدفعات نهائيًا من هذا الجهاز. ننصح بتصدير نسخة احتياطية أولًا.',()=>{state=defaultState();save();renderAll();toast('تم حذف البيانات');});}
-function applyTheme(){const dark=localStorage.getItem(THEME)==='dark';document.body.classList.toggle('dark',dark);document.getElementById('themeBtn').textContent=dark?'☀':'☾';}
+function applyTheme(){const dark=localStorage.getItem(THEME)==='dark';document.body.classList.toggle('dark',dark);document.getElementById('themeBtn').innerHTML=dark?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5 8.7 8.7 0 1 0 20.5 14.2Z"/></svg>'; }
 function toggleTheme(){localStorage.setItem(THEME,document.body.classList.contains('dark')?'light':'dark');applyTheme();}
 applyTheme();save();renderAll();
 </script>
