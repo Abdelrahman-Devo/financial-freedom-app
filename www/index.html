@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
@@ -20,6 +21,7 @@ body{background:linear-gradient(180deg,#eeece4 0,#f7f5ef 270px);color:var(--ink)
 .field input,.field select{background:#fffdf8;border-color:#e5e0d5;border-radius:14px;padding:14px}.field input:focus,.field select:focus{border-color:#159879;box-shadow:0 0 0 3px #15987918}.modal{background:#fffdf8;border:1px solid #e9e4d9;box-shadow:0 -12px 35px #10243a20}.close{background:#f0eee7;color:#506176}.toast{background:#172f43;box-shadow:0 8px 24px #172f4333}
 @media(max-width:380px){.cards{gap:8px}.cat{padding:12px 10px}.amount{font-size:16px}.legend{grid-template-columns:repeat(2,1fr)}}
 </style></head>
+
 <body>
 <header class="top"><div class="toprow"><div><div class="brand">◈ الحرية المالية</div><div class="sub">خطوة واعية نحو مستقبل أفضل</div></div><div class="month" id="monthLabel"></div></div><div class="hero"><label>إجمالي دخلك الشهري — عدّل الرقم في أي وقت</label><div class="salaryline"><input id="salary" type="number" min="0" step="0.01" inputmode="decimal" value="15000" aria-label="الراتب الشهري"><span>جنيه</span></div><div class="hint">توزيع تلقائي حسب خطتك المالية · إجمالي النسب 100%</div></div></header>
 <main class="wrap">
@@ -38,10 +40,81 @@ document.getElementById('salary').addEventListener('input',e=>{let v=parseFloat(
 function showPage(id,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');render()}
 function openModal(title,html){document.getElementById('modalTitle').textContent=title;document.getElementById('modalContent').innerHTML=html;document.getElementById('modalBg').classList.add('show')}function closeModal(){document.getElementById('modalBg').classList.remove('show')}function toast(s){let t=document.getElementById('toast');t.textContent=s;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
 function openExpense(){openModal('تسجيل مصروف',`<form onsubmit="addExpense(event)"><div class="field"><label>اسم المصروف</label><input id="exName" required placeholder="مثال: مشتريات البيت"></div><div class="field"><label>المبلغ بالجنيه</label><input id="exAmount" required type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="0"></div><div class="field"><label>البند</label><select id="exCat">${cats.map(c=>`<option value="${c.id}">${c.name} — ${c.pct}%</option>`).join('')}</select></div><div class="field"><label>التاريخ</label><input id="exDate" type="date" value="${new Date().toISOString().slice(0,10)}"></div><button class="btn primary full" type="submit">حفظ المصروف</button></form>`)}function addExpense(e){e.preventDefault();let amount=Number(document.getElementById('exAmount').value);if(amount<=0)return;let date=document.getElementById('exDate').value;state.expenses.unshift({id:Date.now(),name:document.getElementById('exName').value.trim(),amount,cat:document.getElementById('exCat').value,date,month:date.slice(0,7)});save();closeModal();render();toast('تم تسجيل المصروف')}
-function renderExpenses(){let el=document.getElementById('expenseList'),arr=monthExpenses();el.className=arr.length?'':'empty';el.innerHTML=arr.length?arr.map(x=>{let c=cats.find(c=>c.id===x.cat);return `<div class="listitem row"><div><strong style="font-size:13px">${esc(x.name)}</strong><div class="small">${c?.name||''} · ${x.date}</div></div><div class="row" style="gap:8px"><strong style="font-size:13px">${cash(x.amount)}</strong><button class="close" onclick="deleteExpense(${x.id})">×</button></div></div>`}).join(''):'لسه مفيش مصروفات مسجلة.'}function deleteExpense(id){state.expenses=state.expenses.filter(x=>x.id!==id);save();render();toast('تم حذف المصروف')}
-function openGoal(){openModal('هدف ادخار جديد',`<form onsubmit="addGoal(event)"><div class="field"><label>اسم الهدف</label><input id="gName" required placeholder="مثال: لابتوب"></div><div class="field"><label>المبلغ المستهدف</label><input id="gTarget" type="number" min="1" required placeholder="0"></div><div class="field"><label>المبلغ الذي ادخرته بالفعل</label><input id="gSaved" type="number" min="0" value="0"></div><button class="btn primary full">حفظ الهدف</button></form>`)}function addGoal(e){e.preventDefault();state.goals.push({id:Date.now(),name:document.getElementById('gName').value.trim(),target:+document.getElementById('gTarget').value,saved:+document.getElementById('gSaved').value});save();closeModal();render();toast('تم إضافة الهدف')}function updateGoal(id){let g=state.goals.find(x=>x.id===id);let n=prompt('أدخل إجمالي المبلغ الذي ادخرته حتى الآن',g.saved);if(n===null)return;if(!Number.isFinite(+n)||+n<0)return toast('أدخل مبلغًا صحيحًا');g.saved=+n;save();render()}function removeGoal(id){state.goals=state.goals.filter(x=>x.id!==id);save();render()}function renderGoals(){let el=document.getElementById('goalsList');el.className=state.goals.length?'panel':'panel empty';el.innerHTML=state.goals.length?state.goals.map(g=>{let p=Math.min(100,g.saved/g.target*100);return `<div class="listitem"><div class="row"><strong>${esc(g.name)}</strong><button class="close" onclick="removeGoal(${g.id})">×</button></div><div class="row small" style="margin-top:8px"><span>${cash(g.saved)} من ${cash(g.target)}</span><b>${p.toFixed(0)}%</b></div><div class="goalbar"><i style="width:${p}%"></i></div><button class="btn soft" onclick="updateGoal(${g.id})">تحديث المدخرات</button></div>`}).join(''):'أنشئ هدفك الأول، مثل شراء لابتوب أو تكوين صندوق طوارئ.';let d=document.getElementById('debtsList');d.className=state.debts.length?'panel':'panel empty';d.innerHTML=state.debts.length?state.debts.map(x=>`<div class="listitem"><div class="row"><strong>${esc(x.name)}</strong><button class="close" onclick="removeDebt(${x.id})">×</button></div><div class="small" style="margin-top:6px">المتبقي: ${cash(x.remaining)} من ${cash(x.total)}</div><div class="goalbar"><i style="width:${Math.max(0,Math.min(100,(1-x.remaining/x.total)*100))}%;background:var(--red)"></i></div><button class="btn soft" onclick="payDebt(${x.id})">تسجيل سداد</button></div>`).join(''):'سجّل ديونك وتابع المبلغ المتبقي منها.'}
-function openDebt(){openModal('إضافة دين',`<form onsubmit="addDebt(event)"><div class="field"><label>اسم الدين أو الجهة</label><input id="dName" required placeholder="مثال: قسط جهاز"></div><div class="field"><label>إجمالي الدين</label><input id="dTotal" type="number" min="1" required></div><div class="field"><label>المبلغ المتبقي</label><input id="dRemain" type="number" min="0" required></div><button class="btn primary full">حفظ الدين</button></form>`)}function addDebt(e){e.preventDefault();let total=+document.getElementById('dTotal').value,remaining=+document.getElementById('dRemain').value;if(remaining>total)return toast('المتبقي لا يمكن أن يتجاوز إجمالي الدين');state.debts.push({id:Date.now(),name:document.getElementById('dName').value,total,remaining});save();closeModal();render();toast('تم إضافة الدين')}function payDebt(id){let d=state.debts.find(x=>x.id===id),n=prompt('قيمة المبلغ المسدد', '0');if(n===null)return;if(+n<=0||!Number.isFinite(+n))return toast('أدخل مبلغًا صحيحًا');d.remaining=Math.max(0,d.remaining-(+n));save();render();toast('تم تحديث الدين')}function removeDebt(id){state.debts=state.debts.filter(x=>x.id!==id);save();render()}
-function renderHistory(){document.getElementById('histIncome').textContent=cash(state.salary);document.getElementById('histCount').textContent=monthExpenses().length;let arr=monthExpenses(),el=document.getElementById('historyList');el.className=arr.length?'':'empty';el.innerHTML=arr.length?arr.map(x=>{let c=cats.find(c=>c.id===x.cat);return `<div class="listitem row"><div><strong style="font-size:13px">${esc(x.name)}</strong><div class="small">${x.date} · ${c?.name||''}</div></div><b style="font-size:13px">− ${cash(x.amount)}</b></div>`}).join(''):'ستظهر عملياتك هنا.'}
-function exportData(){let blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='financial-freedom-backup.json';a.click();URL.revokeObjectURL(url);toast('تم تجهيز النسخة الاحتياطية')}function resetData(){if(confirm('متأكد إنك عايز تمسح كل بياناتك؟ لا يمكن التراجع.')){state={salary:0,expenses:[],goals:[],debts:[]};save();render();toast('تم مسح البيانات')}}function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-document.getElementById('salary').value=state.salary;render();
-</script></body></html>
+
+function renderExpenses(){
+  let el=document.getElementById('expenseList'),arr=monthExpenses();
+  el.className=arr.length?'':'empty';
+  el.innerHTML=arr.length?arr.map(x=>{
+    let c=cats.find(c=>c.id===x.cat);
+    return `<div class="listitem row">
+      <div>
+        <strong style="font-size:13px">${esc(x.name)}</strong>
+        <div class="small">${c?.name||''} · ${x.date}</div>
+      </div>
+      <div class="row" style="gap:8px">
+        <strong style="font-size:13px">${cash(x.amount)}</strong>
+        <button class="btn soft" onclick="openEditExpense(${x.id})">تعديل</button>
+        <button class="close" onclick="deleteExpense(${x.id})">×</button>
+      </div>
+    </div>`;
+  }).join(''):'لسه مفيش مصروفات مسجلة.';
+}
+
+function openEditExpense(id){
+  let x=state.expenses.find(e=>e.id===id);
+  if(!x)return toast('المصروف غير موجود');
+
+  openModal('تعديل المصروف',`
+    <form onsubmit="saveExpenseEdit(event,${x.id})">
+      <div class="field">
+        <label>اسم المصروف</label>
+        <input id="exName" required value="${esc(x.name)}">
+      </div>
+      <div class="field">
+        <label>المبلغ بالجنيه</label>
+        <input id="exAmount" required type="number" min="0.01" step="0.01" value="${x.amount}">
+      </div>
+      <div class="field">
+        <label>البند</label>
+        <select id="exCat">
+          ${cats.map(c=>`<option value="${c.id}" ${c.id===x.cat?'selected':''}>${c.name} — ${c.pct}%</option>`).join('')}
+        </select>
+      </div>
+      <div class="field">
+        <label>التاريخ</label>
+        <input id="exDate" type="date" required value="${x.date}">
+      </div>
+      <button class="btn primary full" type="submit">حفظ التعديلات</button>
+    </form>
+  `);
+}
+
+function saveExpenseEdit(e,id){
+  e.preventDefault();
+
+  let x=state.expenses.find(e=>e.id===id);
+  if(!x)return toast('المصروف غير موجود');
+
+  let name=document.getElementById('exName').value.trim();
+  let amount=Number(document.getElementById('exAmount').value);
+  let cat=document.getElementById('exCat').value;
+  let date=document.getElementById('exDate').value;
+
+  if(!name||!Number.isFinite(amount)||amount<=0||!date){
+    return toast('راجع بيانات المصروف');
+  }
+
+  x.name=name;
+  x.amount=amount;
+  x.cat=cat;
+  x.date=date;
+  x.month=date.slice(0,7);
+
+  save();
+  closeModal();
+  render();
+  toast('تم تعديل المصروف بنجاح');
+}
+
+function deleteExpense(id){
+  if(!confirm('هل أنت متأكد من حذف هذا المصروف؟'))retur
