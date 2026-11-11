@@ -116,15 +116,16 @@ function saveExpenseEdit(e,id){
   toast('تم تعديل المصروف بنجاح');
 }
 
+
 function deleteExpense(id){
-  if(!confirm('هل أنت متأكد من حذف هذا المصروف؟'))retur
-n;
+  if(!confirm('هل أنت متأكد من حذف هذا المصروف؟')) return;
 
   state.expenses=state.expenses.filter(x=>x.id!==id);
   save();
   render();
   toast('تم حذف المصروف');
 }
+
 
 function openGoal(){
   openModal('هدف ادخار جديد',`<form onsubmit="addGoal(event)">
