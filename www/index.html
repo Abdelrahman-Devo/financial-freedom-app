@@ -104,6 +104,21 @@ button::-moz-focus-inner { border: 0; }
 /* Daily income and report chart refinements */
 #themeBtn{width:44px;height:44px;min-width:44px;padding:7px;font-size:0;border-radius:14px}
 #themeBtn svg{width:25px;height:25px;display:block}
+/* مصدر الدخل: قائمة مخصصة متوافقة مع الهوية البصرية */
+#incomeSourceWrap[hidden],#dailyIncomeDateWrap[hidden]{display:none!important}
+.income-source-field{position:relative;z-index:5;width:min(100%,320px);max-width:320px!important}
+.source-native{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.source-picker{position:relative;width:100%}
+.source-trigger{width:100%;min-height:48px;padding:0 14px;border:1px solid #ffffff50;border-radius:14px;background:linear-gradient(135deg,#ffffff20,#ffffff10);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:right;font-size:14px;font-weight:750;box-shadow:inset 0 1px 0 #ffffff18;transition:border-color .16s,background .16s}
+.source-trigger:active{background:#ffffff25}
+.source-trigger svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;flex:none;transition:transform .18s}
+.source-trigger[aria-expanded="true"] svg{transform:rotate(180deg)}
+.source-menu{position:absolute;top:calc(100% + 7px);right:0;left:0;padding:6px;border:1px solid #ffffff36;border-radius:15px;background:linear-gradient(145deg,#174d43,#103c36);box-shadow:0 14px 32px #061d1960;z-index:40;display:grid;gap:3px;max-height:240px;overflow:auto}
+.source-menu[hidden]{display:none!important}
+.source-option{width:100%;border:0;border-radius:10px;background:transparent;color:#e4f2ec;text-align:right;padding:11px 12px;font-size:13px;font-weight:600}
+.source-option:active,.source-option.active{background:#159879;color:#fff}
+body.dark .source-trigger{background:linear-gradient(135deg,#ffffff18,#ffffff0b);border-color:#ffffff35}
+body.dark .source-menu{background:linear-gradient(145deg,#152c32,#10232a);border-color:#ffffff25}
 .daily-income-date{margin:10px 0 0;max-width:220px}
 .daily-income-date[hidden]{display:none!important}
 .daily-income-date input{padding:8px 10px;border:1px solid #ffffff55;border-radius:10px;background:#ffffff16;color:#fff;color-scheme:dark}
@@ -145,6 +160,38 @@ body.dark .daily-date-button{background:linear-gradient(135deg,#ffffff18,#ffffff
 
 
 .feature-score{display:flex;align-items:center;gap:14px}.score-ring{width:66px;height:66px;border-radius:50%;display:grid;place-items:center;border:6px solid var(--green);font-weight:900;font-size:19px;flex:0 0 auto}.feature-bars{display:grid;gap:9px}.feature-row{display:grid;grid-template-columns:1fr auto;gap:8px;font-size:12px}.feature-row .chartline{grid-column:1/-1;margin-top:-3px}.alert-item{padding:9px 0;border-bottom:1px solid var(--line);font-size:12px;line-height:1.7}.alert-item:last-child{border:0}.challenge-card{padding:12px 0;border-bottom:1px solid var(--line)}.challenge-card:last-child{border:0}.day-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.day-detail-grid .stat{padding:10px}.income-source-line{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:12px}
+.report-sectionhead{align-items:center;gap:10px}
+.report-date-wrap{width:min(46%,190px);flex:0 0 auto}
+.report-date-button{width:100%;min-height:44px;display:flex;align-items:center;justify-content:space-between;gap:7px;padding:0 10px;border:1px solid var(--line);border-radius:13px;background:linear-gradient(135deg,var(--card),var(--bg));color:var(--ink);font:inherit;font-size:12px;font-weight:700;box-shadow:0 3px 10px #102b3510;direction:rtl}
+.report-date-button svg{width:17px;height:17px;flex:0 0 auto;stroke:var(--green);fill:none;stroke-width:1.8}
+.report-date-button span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.report-date-button b{font-size:15px;color:var(--muted);font-weight:500}
+.report-date-button:active{transform:scale(.985);background:var(--soft)}
+body.dark .report-date-button{background:linear-gradient(135deg,var(--card),var(--bg));border-color:var(--line);box-shadow:none}
+@media(max-width:380px){.report-date-wrap{width:43%}.report-date-button{min-height:41px;padding:0 7px;font-size:11px}.report-sectionhead h2{font-size:16px}}
+
+/* Compact weekly report with expandable detail sheet */
+.weekly-summary-panel{padding:15px!important}
+.weekly-summary-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.weekly-summary-stats>div,.weekly-modal-totals>div{min-width:0;padding:11px 9px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(145deg,#203541,#1b2a36);text-align:center}
+.weekly-summary-stats small,.weekly-modal-totals small{display:block;color:var(--muted);font-size:10px;margin-bottom:5px}
+.weekly-summary-stats strong,.weekly-modal-totals b{display:block;font-size:clamp(12px,3.5vw,16px);overflow-wrap:anywhere}
+.weekly-summary-foot{display:flex;align-items:center;justify-content:space-between;gap:9px;margin-top:13px}
+.weekly-details-btn{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;min-height:39px;padding:8px 12px}
+.weekly-details-btn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.weekly-modal-totals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:14px 0}
+.weekly-day-list{display:grid;gap:9px}
+.weekly-day-row{padding:13px;border:1px solid var(--line);border-radius:15px;background:var(--card)}
+.weekly-day-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.weekly-day-title b{font-size:13px}
+.weekly-day-values{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.weekly-day-values span{font-size:10px;color:var(--muted);min-width:0}
+.weekly-day-values strong{display:block;color:var(--ink);font-size:12px;margin-top:4px;overflow-wrap:anywhere}
+.weekly-source-list{display:grid;gap:5px;margin-top:9px;padding-top:8px;border-top:1px solid var(--line);font-size:11px;color:var(--muted)}
+.negative{color:var(--red)!important}
+body:not(.dark) .weekly-summary-stats>div,body:not(.dark) .weekly-modal-totals>div{background:#f1f7f4}
+@media(max-width:370px){.weekly-summary-foot{align-items:stretch;flex-direction:column}.weekly-details-btn{justify-content:center}.weekly-summary-stats{gap:5px}.weekly-summary-stats>div{padding:9px 5px}}
+
 </style>
 </head>
 <body>
@@ -153,7 +200,7 @@ body.dark .daily-date-button{background:linear-gradient(135deg,#ffffff18,#ffffff
   <div><div class="brand"><span class="logo"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 24V8h4v12h4V13h4v7h4V5h4v19H5Z" fill="#fff" opacity=".28"/><path d="m7 21 7-7 5 3 7-9M20 8h6v6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>الحرية المالية</div><div class="sub">خطوة واعية نحو مستقبل أفضل</div><div class="today-stamp" id="todayStamp" aria-live="polite"></div></div>
   <div class="top-actions"><button class="topbtn" id="themeBtn" onclick="toggleTheme()" aria-label="تغيير المظهر">☾</button><button class="topbtn" onclick="openBudget()">توزيع الميزانية</button></div>
  </div>
- <div class="hero"><label id="incomeLabel">إجمالي دخلك الشهري</label><div class="salaryline"><input id="salary" type="number" min="0" step=".01" inputmode="decimal"><span>جنيه</span></div><div id="dailyIncomeDateWrap" class="field daily-income-date" hidden><label>تاريخ تسجيل الدخل</label><input id="dailyIncomeDate" type="date" dir="ltr" hidden><button type="button" id="dailyDateButton" class="daily-date-button" onclick="openDailyCalendar()"><span id="dailyDateText">تاريخ اليوم</span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M16 3v4M8 3v4M3 10h18"/></svg></button></div><div class="field" id="incomeSourceWrap" style="max-width:260px"><label>مصدر الدخل</label><select id="incomeSource"><option>عمل يومي</option><option>راتب</option><option>عمل إضافي</option><option>مشروع خاص</option><option>مصدر آخر</option></select></div><div class="income-settings"><label>طريقة احتساب الدخل</label><div class="income-period" role="group" aria-label="طريقة احتساب الدخل"><button type="button" id="salaryMonthly" data-period="monthly" class="period-option">دخل شهري</button><button type="button" id="salaryDaily" data-period="daily" class="period-option">دخل يومي</button></div><span id="incomeHint">يُحتسب المبلغ كدخل شهري ثابت</span></div><div class="hint">يمكنك تعديل الدخل في أي وقت · بياناتك محفوظة على جهازك</div></div>
+ <div class="hero"><label id="incomeLabel">إجمالي دخلك الشهري</label><div class="salaryline"><input id="salary" type="number" min="0" step=".01" inputmode="decimal"><span>جنيه</span></div><div id="dailyIncomeDateWrap" class="field daily-income-date" hidden><label>تاريخ تسجيل الدخل</label><input id="dailyIncomeDate" type="date" dir="ltr" hidden><button type="button" id="dailyDateButton" class="daily-date-button" onclick="openDailyCalendar()"><span id="dailyDateText">تاريخ اليوم</span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M16 3v4M8 3v4M3 10h18"/></svg></button></div><div class="field income-source-field" id="incomeSourceWrap" style="max-width:260px" hidden><label>مصدر الدخل</label><select id="incomeSource" class="source-native" aria-hidden="true" tabindex="-1"><option>عمل يومي</option><option>راتب</option><option>عمل إضافي</option><option>مشروع خاص</option><option>مصدر آخر</option></select><div class="source-picker" id="incomeSourcePicker"><button type="button" class="source-trigger" id="incomeSourceTrigger" aria-haspopup="listbox" aria-expanded="false"><span id="incomeSourceValue">عمل يومي</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="source-menu" id="incomeSourceMenu" role="listbox" aria-label="مصدر الدخل" hidden><button type="button" class="source-option active" role="option" aria-selected="true" data-source="عمل يومي">عمل يومي</button><button type="button" class="source-option" role="option" aria-selected="false" data-source="راتب">راتب</button><button type="button" class="source-option" role="option" aria-selected="false" data-source="عمل إضافي">عمل إضافي</button><button type="button" class="source-option" role="option" aria-selected="false" data-source="مشروع خاص">مشروع خاص</button><button type="button" class="source-option" role="option" aria-selected="false" data-source="مصدر آخر">مصدر آخر</button></div></div></div><div class="income-settings"><label>طريقة احتساب الدخل</label><div class="income-period" role="group" aria-label="طريقة احتساب الدخل"><button type="button" id="salaryMonthly" data-period="monthly" class="period-option">دخل شهري</button><button type="button" id="salaryDaily" data-period="daily" class="period-option">دخل يومي</button></div><span id="incomeHint">يُحتسب المبلغ كدخل شهري ثابت</span></div><div class="hint">يمكنك تعديل الدخل في أي وقت · بياناتك محفوظة على جهازك</div></div>
 </header>
 <main class="wrap">
 <section class="page active" id="homePage">
@@ -185,8 +232,8 @@ body.dark .daily-date-button{background:linear-gradient(135deg,#ffffff18,#ffffff
 <section class="page" id="reportPage">
  <div class="sectionhead report-head"><h2>التقرير الشهري</h2><button type="button" class="month-picker-btn report-month-btn" id="reportMonthBtn" onclick="openMonthPicker('reportMonth')"><span id="reportMonthLabel"></span><b aria-hidden="true">⌄</b></button><input type="hidden" id="reportMonth"></div>
  <div class="cards"><div class="stat"><small>الدخل</small><strong id="rIncome">0</strong></div><div class="stat"><small>المصروفات</small><strong id="rSpent">0</strong></div><div class="stat"><small>المتبقي</small><strong id="rLeft">0</strong></div><div class="stat"><small>عدد العمليات</small><strong id="rCount">0</strong></div></div>
- <div class="sectionhead"><h2>الاستهلاك اليومي</h2><span class="muted">حسب تاريخ المصروف</span></div><div class="panel daily-chart-panel"><div id="dailySpendChart" role="img" aria-label="رسم بياني للاستهلاك اليومي"></div></div><div class="sectionhead"><h2>ملخص آخر 7 أيام</h2><input id="weeklyReportDate" type="date" style="max-width:155px" onchange="renderWeeklyDetail()"></div><div class="panel" id="weeklyReportDetail"></div>
- <div class="sectionhead"><h2>تقرير يوم محدد</h2><input id="dailyReportDate" type="date" style="max-width:155px" onchange="renderDayDetail()"></div><div class="panel" id="dailyReportDetail"></div>
+ <div class="sectionhead"><h2>الاستهلاك اليومي</h2><span class="muted">حسب تاريخ المصروف</span></div><div class="panel daily-chart-panel"><div id="dailySpendChart" role="img" aria-label="رسم بياني للاستهلاك اليومي"></div></div><div class="sectionhead report-sectionhead"><h2>ملخص آخر 7 أيام</h2><div class="report-date-wrap"><input id="weeklyReportDate" type="date" hidden><button type="button" class="report-date-button" id="weeklyReportDateButton" onclick="openReportCalendar('weekly')" aria-label="اختيار تاريخ نهاية ملخص آخر سبعة أيام"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><span id="weeklyReportDateText"></span><b aria-hidden="true">⌄</b></button></div></div><div class="panel weekly-summary-panel" id="weeklyReportDetail"></div>
+ <div class="sectionhead report-sectionhead"><h2>تقرير يوم محدد</h2><div class="report-date-wrap"><input id="dailyReportDate" type="date" hidden><button type="button" class="report-date-button" id="dailyReportDateButton" onclick="openReportCalendar('daily')" aria-label="اختيار يوم التقرير"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><span id="dailyReportDateText"></span><b aria-hidden="true">⌄</b></button></div></div><div class="panel" id="dailyReportDetail"></div>
  <div class="sectionhead"><h2>تفاصيل البنود</h2></div><div class="panel" id="rCats"></div><div class="sectionhead"><h2>مقارنة بالشهر السابق</h2></div><div class="panel" id="rCompare"></div>
  <div class="no-print" style="height:16px"></div><button class="btn primary full no-print" onclick="window.print()">طباعة التقرير / حفظ PDF</button>
 </section>
@@ -274,7 +321,7 @@ function goalSaved(g){return validNum(g.manualSaved)+allocatedForGoal(g.id);}
 function debtPaid(d){return state.paymentGroups.filter(g=>g.type===d.type).flatMap(g=>g.allocations||[]).filter(a=>String(a.debtId)===String(d.id)).reduce((s,a)=>s+validNum(a.amount),0);}
 function debtRemaining(d){return Math.max(0,d.total-debtPaid(d));}
 function renderAll(){
- const dailyMode=state.salaryPeriod==='daily',dailyDate=document.getElementById('dailyIncomeDate').value||today();document.getElementById('dailyIncomeDateWrap').hidden=!dailyMode;const sourceWrap=document.getElementById('incomeSourceWrap');if(sourceWrap)sourceWrap.hidden=!dailyMode;document.getElementById('dailyIncomeDate').value=dailyDate;const dateText=document.getElementById('dailyDateText');if(dateText)dateText.textContent=formatArabicDate(dailyDate);const chosenSource=document.getElementById('incomeSource')?.value||'مصدر آخر';const sourceEntry=state.dailyIncomeEntries.find(x=>x.date===dailyDate&&x.source===chosenSource);document.getElementById('salary').value=dailyMode?(sourceEntry?.amount??(state.dailyIncomeEntries.some(x=>x.date===dailyDate)?'':(state.dailyIncomes[dailyDate]??''))):state.salary;document.getElementById('salary').placeholder=dailyMode?'دخل هذا اليوم':'الدخل الشهري';document.getElementById('salaryMonthly').classList.toggle('active',!dailyMode);document.getElementById('salaryDaily').classList.toggle('active',dailyMode);document.getElementById('incomeLabel').textContent=dailyMode?'دخل اليوم المحدد':'إجمالي دخلك الشهري';document.getElementById('incomeHint').textContent=dailyMode?'سجّل دخل كل يوم على حدة؛ إجمالي الشهر هو مجموع الأيام المسجلة':'يُحتسب المبلغ كدخل شهري ثابت';
+ const dailyMode=state.salaryPeriod==='daily',dailyDate=document.getElementById('dailyIncomeDate').value||today();document.getElementById('dailyIncomeDateWrap').hidden=!dailyMode;const sourceWrap=document.getElementById('incomeSourceWrap');if(sourceWrap)sourceWrap.hidden=!dailyMode;if(!dailyMode){const menu=document.getElementById('incomeSourceMenu');if(menu)menu.hidden=true;document.getElementById('incomeSourceTrigger')?.setAttribute('aria-expanded','false');}document.getElementById('dailyIncomeDate').value=dailyDate;const dateText=document.getElementById('dailyDateText');if(dateText)dateText.textContent=formatArabicDate(dailyDate);const chosenSource=document.getElementById('incomeSource')?.value||'عمل يومي';const sourceValue=document.getElementById('incomeSourceValue');if(sourceValue)sourceValue.textContent=chosenSource;document.querySelectorAll('.source-option').forEach(b=>{const active=b.dataset.source===chosenSource;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));});const sourceEntry=state.dailyIncomeEntries.find(x=>x.date===dailyDate&&x.source===chosenSource);document.getElementById('salary').value=dailyMode?(sourceEntry?.amount??(state.dailyIncomeEntries.some(x=>x.date===dailyDate)?'':(state.dailyIncomes[dailyDate]??''))):state.salary;document.getElementById('salary').placeholder=dailyMode?'دخل هذا اليوم':'الدخل الشهري';document.getElementById('salaryMonthly').classList.toggle('active',!dailyMode);document.getElementById('salaryDaily').classList.toggle('active',dailyMode);document.getElementById('incomeLabel').textContent=dailyMode?'دخل اليوم المحدد':'إجمالي دخلك الشهري';document.getElementById('incomeHint').textContent=dailyMode?'سجّل دخل كل يوم على حدة؛ إجمالي الشهر هو مجموع الأيام المسجلة':'يُحتسب المبلغ كدخل شهري ثابت';
  const d=new Date();document.getElementById('monthLabel').textContent=d.toLocaleDateString('ar-EG',{month:'long',year:'numeric'});const stamp=document.getElementById('todayStamp');if(stamp)stamp.textContent='اليوم · '+formatArabicDate(today());
  renderHome();renderExpenses();renderGoals();renderDebts();renderReport();renderHistory();renderSmartFeatures();
 }
@@ -294,6 +341,11 @@ function renderHome(){
 }
 document.getElementById('salary').addEventListener('change',e=>{const amount=Math.max(0,validNum(e.target.value));if(state.salaryPeriod==='daily'){const date=document.getElementById('dailyIncomeDate').value||today(),source=document.getElementById('incomeSource')?.value||'مصدر آخر';if(!state.dailyIncomeEntries.some(x=>x.date===date)&&validNum(state.dailyIncomes[date])>0)state.dailyIncomeEntries.push({date,source:'مصدر آخر',amount:validNum(state.dailyIncomes[date])});const i=state.dailyIncomeEntries.findIndex(x=>x.date===date&&x.source===source);if(i>=0)state.dailyIncomeEntries[i].amount=amount;else state.dailyIncomeEntries.push({date,source,amount});state.dailyIncomes[date]=state.dailyIncomeEntries.filter(x=>x.date===date).reduce((a,x)=>a+x.amount,0);}else{state.salary=amount;}save();renderAll();});
 document.getElementById('dailyIncomeDate').addEventListener('change',e=>{if(!/^\d{4}-\d{2}-\d{2}$/.test(e.target.value))return;renderAll();});document.getElementById('incomeSource')?.addEventListener('change',()=>renderAll());
+const sourceTrigger=document.getElementById('incomeSourceTrigger'),sourceMenu=document.getElementById('incomeSourceMenu'),sourceSelect=document.getElementById('incomeSource');
+sourceTrigger?.addEventListener('click',()=>{const open=sourceMenu.hidden;sourceMenu.hidden=!open;sourceTrigger.setAttribute('aria-expanded',String(open));});
+sourceMenu?.addEventListener('click',e=>{const option=e.target.closest('[data-source]');if(!option)return;sourceSelect.value=option.dataset.source;sourceMenu.hidden=true;sourceTrigger.setAttribute('aria-expanded','false');renderAll();});
+document.addEventListener('click',e=>{if(!e.target.closest('#incomeSourcePicker')&&sourceMenu&&!sourceMenu.hidden){sourceMenu.hidden=true;sourceTrigger?.setAttribute('aria-expanded','false');}});
+
 document.getElementById('salaryMonthly').addEventListener('click',()=>setSalaryPeriod(document.getElementById('salaryMonthly').dataset.period));
 document.getElementById('salaryDaily').addEventListener('click',()=>setSalaryPeriod(document.getElementById('salaryDaily').dataset.period));
 function setSalaryPeriod(period){if(period!=='daily'&&period!=='monthly')return;if(period==='daily')document.getElementById('dailyIncomeDate').value=today();state.salaryPeriod=period;save();renderAll();toast(period==='daily'?'تم تفعيل تسجيل الدخل اليومي':'تم تفعيل الدخل الشهري');}
@@ -303,6 +355,32 @@ function openDailyCalendar(){const value=document.getElementById('dailyIncomeDat
 function shiftDailyCalendar(delta){dailyCalendarMonth+=delta;if(dailyCalendarMonth<0){dailyCalendarMonth=11;dailyCalendarYear--;}if(dailyCalendarMonth>11){dailyCalendarMonth=0;dailyCalendarYear++;}drawDailyCalendar();}
 function drawDailyCalendar(){const selected=document.getElementById('dailyIncomeDate').value||today(),first=new Date(dailyCalendarYear,dailyCalendarMonth,1),count=new Date(dailyCalendarYear,dailyCalendarMonth+1,0).getDate(),offset=first.getDay(),names=['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];let cells=names.map(n=>`<div class="weekday">${n.slice(0,1)}</div>`).join('');for(let i=0;i<offset;i++)cells+='<span></span>';for(let day=1;day<=count;day++){const value=dailyCalendarYear+'-'+String(dailyCalendarMonth+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');cells+=`<button type="button" class="day ${value===today()?'today':''} ${value===selected?'selected':''}" onclick="selectDailyDate('${value}')">${day.toLocaleString('ar-EG')}</button>`;}openModal('اختيار تاريخ الدخل',`<div class="calendar-head"><button type="button" onclick="shiftDailyCalendar(-1)" aria-label="الشهر السابق">‹</button><strong>${monthNames[dailyCalendarMonth]} ${dailyCalendarYear}</strong><button type="button" onclick="shiftDailyCalendar(1)" aria-label="الشهر التالي">›</button></div><div class="daily-calendar-grid">${cells}</div><div class="daily-calendar-actions"><button type="button" class="btn ghost" onclick="selectDailyDate(today())">العودة لليوم</button><button type="button" class="btn primary" onclick="closeModal()">إغلاق</button></div>`);}
 function selectDailyDate(value){if(!/^\d{4}-\d{2}-\d{2}$/.test(value))return;document.getElementById('dailyIncomeDate').value=value;document.getElementById('dailyDateText').textContent=formatArabicDate(value);document.getElementById('salary').value=state.dailyIncomes[value]??'';document.getElementById('incomeLabel').textContent='دخل يوم '+formatArabicDate(value);closeModal();}
+let reportCalendarKind='weekly',reportCalendarYear=Number(today().slice(0,4)),reportCalendarMonth=Number(today().slice(5,7))-1;
+function syncReportDateButtons(){
+ ['weekly','daily'].forEach(kind=>{const id=kind==='weekly'?'weeklyReportDate':'dailyReportDate',value=document.getElementById(id)?.value||today(),label=document.getElementById(kind+'ReportDateText');if(label)label.textContent=formatArabicDate(value);});
+}
+function openReportCalendar(kind){
+ reportCalendarKind=kind==='daily'?'daily':'weekly';
+ const id=reportCalendarKind==='weekly'?'weeklyReportDate':'dailyReportDate',value=document.getElementById(id).value||today();
+ reportCalendarYear=Number(value.slice(0,4));reportCalendarMonth=Number(value.slice(5,7))-1;drawReportCalendar();
+}
+function shiftReportCalendar(delta){
+ reportCalendarMonth+=delta;if(reportCalendarMonth<0){reportCalendarMonth=11;reportCalendarYear--;}if(reportCalendarMonth>11){reportCalendarMonth=0;reportCalendarYear++;}drawReportCalendar();
+}
+function drawReportCalendar(){
+ const id=reportCalendarKind==='weekly'?'weeklyReportDate':'dailyReportDate',selected=document.getElementById(id).value||today();
+ const first=new Date(reportCalendarYear,reportCalendarMonth,1),count=new Date(reportCalendarYear,reportCalendarMonth+1,0).getDate(),offset=first.getDay(),names=['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+ let cells=names.map(n=>`<div class="weekday">${n.slice(0,1)}</div>`).join('');
+ for(let i=0;i<offset;i++)cells+='<span></span>';
+ for(let day=1;day<=count;day++){const value=reportCalendarYear+'-'+String(reportCalendarMonth+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');cells+=`<button type="button" class="day ${value===today()?'today':''} ${value===selected?'selected':''}" onclick="selectReportDate('${value}')">${day.toLocaleString('ar-EG')}</button>`;}
+ openModal(reportCalendarKind==='weekly'?'اختيار تاريخ ملخص الأيام':'اختيار تاريخ التقرير',`<div class="calendar-head"><button type="button" onclick="shiftReportCalendar(-1)" aria-label="الشهر السابق">‹</button><strong>${monthNames[reportCalendarMonth]} ${reportCalendarYear}</strong><button type="button" onclick="shiftReportCalendar(1)" aria-label="الشهر التالي">›</button></div><div class="daily-calendar-grid">${cells}</div><div class="daily-calendar-actions"><button type="button" class="btn ghost" onclick="selectReportDate(today())">العودة لليوم</button><button type="button" class="btn primary" onclick="closeModal()">إغلاق</button></div>`);
+}
+function selectReportDate(value){
+ if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(value))return;
+ const weekly=reportCalendarKind==='weekly',id=weekly?'weeklyReportDate':'dailyReportDate';
+ document.getElementById(id).value=value;syncReportDateButtons();closeModal();
+ if(weekly)renderWeeklyDetail();else renderDayDetail();
+}
 function openBudget(){
  openModal('تعديل توزيع الميزانية',`<form id="budgetForm">${CATS.map(c=>`<div class="field"><label>${c.name} (%)</label><input type="number" min="0" max="100" step=".5" name="${c.id}" value="${state.budgets[c.id]}"></div>`).join('')}<div class="note" id="budgetTotal">المجموع الحالي: ${CATS.reduce((s,c)=>s+state.budgets[c.id],0)}%</div><div class="modal-actions"><button type="button" class="btn ghost" onclick="closeModal()">إلغاء</button><button class="btn primary">حفظ التوزيع</button></div></form>`);
  const form=document.getElementById('budgetForm'),total=()=>[...form.querySelectorAll('input')].reduce((s,i)=>s+validNum(i.value),0);
@@ -405,11 +483,36 @@ function renderReport(){
  const prev=previousMonth(reportMonth),prevTotal=state.expenses.filter(x=>monthKey(x.date)===prev).reduce((s,x)=>s+x.amount,0),diff=total-prevTotal;
  document.getElementById('rCompare').innerHTML=`<div class="small">مقارنة ${monthLabel(reportMonth)} مع ${monthLabel(prev)}</div><p>${!prevTotal&&!total?'لا توجد مصروفات في الشهرين.':!prevTotal?'مصروفات الشهر الحالي '+cash(total)+' ولا توجد مصروفات مسجلة في الشهر السابق.':`${diff>0?'زادت':'انخفضت'} المصروفات بمقدار ${cash(Math.abs(diff))} (${(Math.abs(diff)/prevTotal*100).toFixed(1)}%).`}</p><div class="small">الدخل المحتسب: ${state.salaryPeriod==='daily'?'مجموع الدخل المسجل لكل يوم: '+cash(income):cash(income)+' شهريًا'}.</div>`;
  renderDailySpendChart(rows,reportMonth);
+ renderWeeklyDetail();
 }
 document.getElementById('reportMonth').value=reportMonth;const dr=document.getElementById('dailyReportDate');if(dr)dr.value=today();const wr=document.getElementById('weeklyReportDate');if(wr)wr.value=today();
 function renderHistory(){
  const all=[...state.expenses.map(x=>({date:x.date,type:'مصروف',name:x.name,amount:x.amount})),...state.paymentGroups.map(g=>({date:g.date,type:g.type==='owed'?'سداد':'تحصيل',name:g.note||'دفعة دين',amount:g.amount})),...state.goals.filter(g=>g.manualSaved>0).map(g=>({date:'—',type:'ادخار يدوي',name:g.name,amount:g.manualSaved}))].sort((a,b)=>String(b.date).localeCompare(String(a.date)));
  document.getElementById('allHistory').innerHTML=all.length?all.map(x=>`<div class="listitem split"><div><b>${esc(x.name)}</b><div class="small">${esc(x.type)} · ${esc(x.date)}</div></div><strong>${cash(x.amount)}</strong></div>`).join(''):'<div class="empty">لا توجد عمليات بعد.</div>';
+}
+function getLastSevenDays(endDate){
+ const [y,m,d]=String(endDate||today()).split('-').map(Number),end=new Date(y,m-1,d),days=[];
+ for(let i=6;i>=0;i--){const x=new Date(end);x.setDate(end.getDate()-i);days.push(x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0'));}
+ return days;
+}
+function weeklyDayData(date){
+ const income=state.salaryPeriod==='daily'?validNum(state.dailyIncomes[date]):0;
+ const entries=state.dailyIncomeEntries.filter(x=>x.date===date);
+ const sourceIncome=entries.reduce((sum,x)=>sum+validNum(x.amount),0);
+ const finalIncome=sourceIncome||income;
+ const expenses=state.expenses.filter(x=>x.date===date),spent=expenses.reduce((sum,x)=>sum+validNum(x.amount),0);
+ return {date,income:finalIncome,spent,left:finalIncome-spent,count:expenses.length,entries,expenses};
+}
+function renderWeeklyDetail(){
+ const host=document.getElementById('weeklyReportDetail');if(!host)return;
+ const end=document.getElementById('weeklyReportDate')?.value||today(),days=getLastSevenDays(end).map(weeklyDayData);
+ const income=days.reduce((s,x)=>s+x.income,0),spent=days.reduce((s,x)=>s+x.spent,0),active=days.filter(x=>x.income>0||x.spent>0).length;
+ host.innerHTML=`<div class="weekly-summary-stats"><div><small>إجمالي الدخل</small><strong>${cash(income)}</strong></div><div><small>إجمالي المصروفات</small><strong>${cash(spent)}</strong></div><div><small>المتبقي</small><strong>${cash(income-spent)}</strong></div></div><div class="weekly-summary-foot"><span class="small">${active} أيام بها تسجيل خلال الفترة</span><button type="button" class="btn primary weekly-details-btn" onclick="openWeeklyDetails()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h16M8 5v0M8 12v0M8 19v0"/></svg>عرض تفاصيل الأيام</button></div>`;
+}
+function openWeeklyDetails(){
+ const end=document.getElementById('weeklyReportDate')?.value||today(),days=getLastSevenDays(end).map(weeklyDayData),income=days.reduce((s,x)=>s+x.income,0),spent=days.reduce((s,x)=>s+x.spent,0);
+ const rows=days.slice().reverse().map(x=>`<div class="weekly-day-row"><div class="weekly-day-title"><b>${esc(formatArabicDate(x.date))}</b><span class="badge">${x.count} مصروفات</span></div><div class="weekly-day-values"><span>الدخل<strong>${state.salaryPeriod==='daily'?cash(x.income):'غير مفصل'}</strong></span><span>المصروفات<strong>${cash(x.spent)}</strong></span><span>المتبقي<strong class="${x.left<0?'negative':''}">${state.salaryPeriod==='daily'?cash(x.left):'—'}</strong></span></div>${x.entries.length?`<div class="weekly-source-list">${x.entries.map(e=>`<span>${esc(e.source)}: ${cash(e.amount)}</span>`).join('')}</div>`:''}${x.expenses.length?`<div class="weekly-source-list">${x.expenses.map(e=>`<span>${esc(e.name)}: ${cash(e.amount)}</span>`).join('')}</div>`:''}</div>`).join('');
+ openModal('تفاصيل آخر 7 أيام',`<div class="weekly-modal-totals"><div><small>إجمالي الدخل</small><b>${cash(income)}</b></div><div><small>إجمالي المصروفات</small><b>${cash(spent)}</b></div><div><small>المتبقي</small><b>${cash(income-spent)}</b></div></div><div class="weekly-day-list">${rows}</div><div class="modal-actions"><button type="button" class="btn primary" onclick="closeModal()">إغلاق</button></div>`);
 }
 function renderDayDetail(){
  const el=document.getElementById('dailyReportDetail');if(!el)return;const date=document.getElementById('dailyReportDate')?.value||today(),income=state.salaryPeriod==='daily'?(state.dailyIncomes[date]||0):0,rows=state.expenses.filter(x=>x.date===date),spent=rows.reduce((a,x)=>a+x.amount,0),sources=state.dailyIncomeEntries.filter(x=>x.date===date);
