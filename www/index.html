@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
@@ -7,605 +6,259 @@
 <meta name="theme-color" content="#123d32">
 <title>الحرية المالية</title>
 <style>
-:root{--bg:#f7f5ef;--card:#fffdf8;--ink:#17283f;--muted:#788397;--green:#087f63;--line:#e9e4d9;--gold:#e4b85c;--red:#c96c70;--blue:#668bb8;--purple:#8878ad;--peach:#c58b6c;--shadow:0 10px 28px rgba(23,40,63,.075)}
-*{box-sizing:border-box}
-body{margin:0;background:linear-gradient(180deg,#eeece4 0,#f7f5ef 270px);color:var(--ink);font-family:system-ui,-apple-system,'Segoe UI',Tahoma,Arial,sans-serif;padding-bottom:88px}
-.top{background:radial-gradient(circle at 88% 0%,#159879 0,transparent 39%),linear-gradient(135deg,#14243a 0%,#1b354b 62%,#087f63 100%);padding:25px 20px 34px;border-radius:0 0 32px 32px;box-shadow:0 12px 28px rgba(20,36,58,.18);position:relative;overflow:hidden;color:white}
-.top:after{content:"";position:absolute;width:190px;height:190px;border:1px solid #ffffff20;border-radius:50%;left:-75px;bottom:-115px;box-shadow:0 0 0 22px #ffffff09,0 0 0 46px #ffffff06;pointer-events:none}
-.toprow{display:flex;justify-content:space-between;align-items:center}
-.brand{font-size:21px;font-weight:850;letter-spacing:-.6px}
-.sub,.hero label,.hint{color:#d0dedb}
-.sub{font-size:12px;margin-top:4px}
-.month{font-size:12px;background:#ffffff16;border:1px solid #ffffff25;color:#f3e6c7;border-radius:14px;padding:8px 11px}
-.hero{margin-top:28px;position:relative;z-index:1}
-.hero label{font-size:12px}
-.salaryline{display:flex;align-items:center;gap:8px;margin-top:7px}
-.salaryline input{width:100%;max-width:250px;background:transparent;border:0;border-bottom:1px solid #ffffff65;color:#fff;font-size:34px;font-weight:850;outline:0;padding:4px 0}
-.salaryline span{font-size:14px;color:#d6e5dc}
-.hint{font-size:11px;margin-top:8px}
-.wrap{padding:20px 16px;max-width:760px;margin:auto}
-.sectionhead{display:flex;justify-content:space-between;align-items:center;margin:23px 3px 13px}
-.sectionhead h2{font-size:18px;letter-spacing:-.2px;margin:0}
-.muted{color:var(--muted);font-size:12px}
-.summary,.panel{background:var(--card);border:1px solid #e9e4d9;border-radius:22px;box-shadow:0 9px 26px rgba(26,43,66,.06)}
-.summary{padding:18px;margin-top:-4px}
-.sumtop{display:flex;justify-content:space-between;align-items:center}
-.sumtop strong{font-size:15px}
-.sumtop span{font-size:12px;color:var(--muted)}
-.bar{display:flex;height:13px;border-radius:20px;overflow:hidden;margin:16px 0 12px;background:#eeece5}
-.legend{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 8px}
-.legenditem{font-size:11px;color:#68778b;display:flex;align-items:center;gap:5px}
-.dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0}
-.cards{display:grid;grid-template-columns:1fr 1fr;gap:11px}
-.cat{background:var(--card);border:1px solid #e9e4d9;border-radius:20px;padding:15px 14px;box-shadow:0 7px 20px rgba(26,43,66,.05);min-width:0;transition:transform .15s ease}
-.cat:active{transform:scale(.985)}
-.cathead{display:flex;align-items:center;gap:8px}
-.ico{width:39px;height:39px;border-radius:14px;display:grid;place-items:center;font-size:18px}
-.catname{font-size:13px;font-weight:750;color:#26364c}
-.pct{font-size:11px;color:#8290a2;margin-top:2px}
-.amount{font-size:19px;font-weight:850;color:#17283f;letter-spacing:-.3px;margin-top:13px;white-space:nowrap}
-.remain{font-size:11px;margin-top:4px}
-.progress{height:6px;background:#eeece5;border-radius:10px;margin-top:11px;overflow:hidden}
-.progress i{display:block;height:100%;border-radius:10px}
-.panel{padding:17px;margin-top:12px}
-.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
-.stat{background:linear-gradient(145deg,#fffdf8,#f2f0e9);border:1px solid #e9e4d9;border-radius:16px;padding:14px}
-.stat small{color:var(--muted);font-size:11px}
-.stat strong{display:block;font-size:18px;margin-top:5px;color:#1b354b}
-.note{background:#fff7e6;border:1px solid #f0dfb7;color:#82652c;border-radius:15px;padding:12px;font-size:11px;line-height:1.7;margin-top:12px}
-.btn{border:0;border-radius:14px;padding:12px 16px;font-weight:750;font-size:13px;cursor:pointer;transition:filter .15s ease,transform .15s ease}
-.btn:active{transform:scale(.98)}
-.primary{background:linear-gradient(135deg,#087f63,#159879);color:#fff;box-shadow:0 5px 13px #087f6326}
-.soft{background:#e5f1eb;color:#087456}
-.danger{background:#fff0ef;color:#b84d58}
-.full{width:100%}
-.tabs{position:fixed;bottom:0;left:0;right:0;background:rgba(255,253,248,.96);backdrop-filter:blur(12px);border-top:1px solid #e9e4d9;box-shadow:0 -8px 24px rgba(26,43,66,.06);display:grid;grid-template-columns:repeat(4,1fr);padding:9px 8px calc(8px + env(safe-area-inset-bottom));z-index:5}
-.tab{border:0;background:transparent;color:#8995a5;font-size:10px;padding:8px 2px;display:grid;gap:5px;justify-items:center}
-.tab b{font-size:21px;font-weight:500}
-.tab.active{color:#087f63;font-weight:800}
-.tab.active b{background:#e5f1eb;border-radius:12px;min-width:42px;padding:3px 10px}
-.page{display:none}
-.page.active{display:block}
-.field{display:grid;gap:6px;margin:12px 0}
-.field label{font-size:12px;color:var(--muted);font-weight:700}
-.field input,.field select{width:100%;border:1px solid #e5e0d5;border-radius:14px;padding:14px;background:#fffdf8;color:var(--ink);font:inherit;outline:none}
-.field input:focus,.field select:focus{border-color:#159879;box-shadow:0 0 0 3px #15987918}
-.listitem{padding:12px 0;border-bottom:1px solid var(--line)}
-.listitem:last-child{border:0}
-.small{font-size:11px;color:var(--muted)}
-.empty{text-align:center;padding:25px 10px;color:var(--muted);font-size:13px}
-.goalbar{height:8px;background:#edf1ed;border-radius:20px;overflow:hidden;margin:10px 0}
-.goalbar i{display:block;height:100%;background:var(--blue)}
-.modalbg{display:none;position:fixed;inset:0;background:#0b2019a6;z-index:10;align-items:flex-end;justify-content:center}
-.modalbg.show{display:flex}
-.modal{background:#fffdf8;width:100%;max-width:600px;border:1px solid #e9e4d9;border-radius:24px 24px 0 0;padding:22px 18px calc(20px + env(safe-area-inset-bottom));max-height:90vh;overflow:auto;box-shadow:0 -12px 35px #10243a20}
-.modal h3{margin:0 0 12px}
-.close{border:0;background:#f0eee7;color:#506176;border-radius:50%;width:34px;height:34px;font-size:18px}
-.toast{position:fixed;bottom:92px;left:50%;transform:translateX(-50%);background:#172f43;color:white;padding:11px 16px;border-radius:20px;font-size:12px;display:none;z-index:20;white-space:nowrap;box-shadow:0 8px 24px #172f4333}
-.toast.show{display:block}
-.theme-toggle{padding:8px 11px;min-width:42px;background:#ffffff20;color:#fff;border:1px solid #ffffff35}
-body.dark{--bg:#101923;--card:#1b2936;--ink:#edf3f6;--muted:#a7b5c2;--line:#344453;background:#101923;color:#edf3f6}
-body.dark .summary,body.dark .panel,body.dark .cat{background:#1b2936!important;border-color:#344453!important;color:#edf3f6}
-body.dark .stat{background:#223342!important;border-color:#3a4b59!important}
-body.dark .stat strong,body.dark .catname,body.dark .amount,body.dark .sectionhead h2{color:#edf3f6!important}
-body.dark .muted,body.dark .pct,body.dark .legenditem,body.dark .remain{color:#a7b5c2!important}
-body.dark .bar,body.dark .progress{background:#344453}
-body.dark .tabs{background:rgba(24,37,49,.97);border-color:#344453}
-body.dark .tab{color:#9aaaba}
-body.dark .tab.active{color:#55c5a1}
-body.dark .tab.active b{background:#29483f}
-body.dark .field input,body.dark .field select{background:#223342!important;color:#edf3f6!important;border-color:#435565!important}
-body.dark .modal{background:#1b2936!important;color:#edf3f6;border-color:#344453}
-body.dark .close{background:#344453;color:#edf3f6}
-body.dark .note{background:#3a3427;border-color:#67552f;color:#f0d99d}
-body.dark .empty{color:#a7b5c2}
-@media(max-width:380px){.cards{gap:8px}.cat{padding:12px 10px}.amount{font-size:16px}.legend{grid-template-columns:repeat(2,1fr)}}
-@media(min-width:600px){.cards{grid-template-columns:repeat(3,1fr)}.modalbg{align-items:center}.modal{border-radius:24px}}
+:root{--bg:#f4f6f3;--card:#fff;--ink:#172b3a;--muted:#718096;--line:#e5ebe6;--green:#087f63;--green2:#13a17d;--gold:#d9a441;--red:#c45c62;--blue:#648bb8;--purple:#8878ad;--shadow:0 10px 30px rgba(20,45,39,.07)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;padding-bottom:88px;transition:.2s}
+button,input,select{font:inherit}button{cursor:pointer}.top{padding:calc(22px + env(safe-area-inset-top)) 18px 30px;background:radial-gradient(circle at 85% 0,#159879 0,transparent 38%),linear-gradient(135deg,#14283b,#087f63);color:#fff;border-radius:0 0 30px 30px;box-shadow:0 12px 30px #102b2426}
+.toprow,.row{display:flex;justify-content:space-between;align-items:center;gap:10px}.brand{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:850}.logo{width:42px;height:42px;border-radius:15px;background:#ffffff1b;border:1px solid #ffffff40;display:grid;place-items:center}.logo svg{width:29px;height:29px}.sub{font-size:12px;color:#d1e5dc;margin-top:4px}.top-actions{display:flex;gap:7px}.topbtn{border:1px solid #ffffff35;background:#ffffff17;color:#fff;border-radius:12px;padding:9px 11px}.hero{margin-top:26px}.hero label{font-size:12px;color:#d1e5dc}.salaryline{display:flex;align-items:center;gap:8px;margin-top:7px}.salaryline input{width:230px;max-width:75%;background:transparent;border:0;border-bottom:1px solid #ffffff80;color:white;font-size:34px;font-weight:850;outline:none;padding:4px 0}.salaryline span{font-size:13px;color:#d1e5dc}.hint{font-size:11px;color:#c4ddd2;margin-top:7px}
+.wrap{max-width:850px;margin:auto;padding:18px 15px}.page{display:none}.page.active{display:block}.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:23px 3px 13px}.sectionhead h2{font-size:18px;margin:0}.muted,.small{color:var(--muted);font-size:12px}.summary,.panel,.cat,.stat{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow)}.summary,.panel{padding:16px}.sumbar{display:flex;height:12px;border-radius:20px;overflow:hidden;background:#edf1ed;margin:15px 0}.legend{display:grid;grid-template-columns:repeat(3,1fr);gap:10px 7px}.legenditem{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px}.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.cat{padding:14px;min-width:0}.cathead{display:flex;align-items:center;gap:8px}.ico{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;font-size:19px}.catname{font-size:13px;font-weight:800}.pct,.remain{font-size:11px;color:var(--muted);margin-top:3px}.amount{font-size:19px;font-weight:850;margin-top:12px;white-space:nowrap}.progress,.goalbar{height:7px;border-radius:20px;background:#edf1ed;overflow:hidden;margin-top:10px}.progress i,.goalbar i{display:block;height:100%;border-radius:20px}.statgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{padding:13px;box-shadow:none}.stat small{font-size:11px;color:var(--muted)}.stat strong{display:block;font-size:18px;margin-top:5px}.btn{border:0;border-radius:13px;padding:11px 14px;font-size:12px;font-weight:800;transition:.15s}.btn:active{transform:scale(.98)}.primary{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff}.soft{background:#e8f3ee;color:#087456}.danger{background:#fff0ef;color:#b64f57}.ghost{background:#f0f3f1;color:#536577}.full{width:100%}.tabs{position:fixed;z-index:5;bottom:0;left:0;right:0;display:grid;grid-template-columns:repeat(5,1fr);padding:8px 5px calc(7px + env(safe-area-inset-bottom));background:#ffffffed;backdrop-filter:blur(14px);border-top:1px solid var(--line)}.tab{border:0;background:transparent;color:#87949e;font-size:10px;display:grid;justify-items:center;gap:4px;padding:6px 1px}.tab b{font-size:20px;font-weight:500}.tab.active{color:var(--green);font-weight:850}.tab.active b{background:#e6f2ec;border-radius:11px;padding:2px 12px}
+.field{display:grid;gap:6px;margin:12px 0}.field label{font-size:12px;color:var(--muted);font-weight:750}.field input,.field select{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);outline:none}.field input:focus,.field select:focus{border-color:var(--green);box-shadow:0 0 0 3px #087f6318}.listitem{padding:13px 0;border-bottom:1px solid var(--line)}.listitem:last-child{border:0}.empty{text-align:center;padding:24px 8px;color:var(--muted);font-size:13px}.actions{display:flex;gap:6px;flex-wrap:wrap}.mini{padding:7px 9px;font-size:11px}.badge{font-size:10px;padding:4px 8px;border-radius:20px;background:#e8f3ee;color:#087456}.note{padding:12px;border-radius:13px;background:#fff7e6;border:1px solid #f0dfb7;color:#80652e;font-size:11px;line-height:1.7;margin-top:12px}
+.modalbg{display:none;position:fixed;inset:0;background:#071b18a8;z-index:20;align-items:flex-end;justify-content:center;padding-top:20px}.modalbg.show{display:flex}.modal{background:var(--card);color:var(--ink);width:100%;max-width:620px;border-radius:24px 24px 0 0;padding:19px 17px calc(18px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto;box-shadow:0 -12px 40px #10243a30}.modal h3{margin:0;font-size:17px}.close{width:34px;height:34px;border:0;border-radius:50%;background:#edf1ed;color:#506176;font-size:20px}.modal-actions{display:flex;gap:8px;margin-top:15px}.modal-actions>*{flex:1}.toast{position:fixed;z-index:30;bottom:95px;left:50%;transform:translateX(-50%);background:#173448;color:white;padding:11px 16px;border-radius:20px;font-size:12px;display:none;max-width:90%;text-align:center;box-shadow:var(--shadow)}.toast.show{display:block}.tablelike{display:grid;gap:9px}.split{display:flex;justify-content:space-between;gap:8px;align-items:center}.chartline{height:9px;background:#edf1ed;border-radius:20px;overflow:hidden;margin-top:7px}.chartline i{display:block;height:100%}
+@media(min-width:650px){.cards{grid-template-columns:repeat(3,minmax(0,1fr))}.modalbg{align-items:center}.modal{border-radius:24px}.wrap{padding-top:23px}}
+@media(max-width:370px){.legend{grid-template-columns:repeat(2,1fr)}.cat{padding:11px}.amount{font-size:16px}.tab{font-size:9px}}
+body.dark{--bg:#101a23;--card:#1c2a36;--ink:#edf4f4;--muted:#a5b5c1;--line:#344552;background:var(--bg)}body.dark .tabs{background:#182632f2;border-color:var(--line)}body.dark .tab{color:#a3b3bd}body.dark .tab.active{color:#61c8a5}body.dark .tab.active b{background:#29483e}body.dark .soft{background:#29483e;color:#8be0c0}body.dark .ghost,body.dark .close{background:#344552;color:#edf4f4}body.dark .stat{box-shadow:none}body.dark .sumbar,body.dark .progress,body.dark .goalbar,body.dark .chartline{background:#344552}body.dark .note{background:#3b3528;border-color:#65552e;color:#f0d99d}
+@media print{body{background:#fff!important;color:#111!important;padding:0!important}.top,.tabs,.no-print,.toast,.modalbg{display:none!important}.wrap{max-width:none;padding:0!important}.page{display:none!important}#reportPage{display:block!important}.summary,.panel,.stat,.cat{box-shadow:none!important;border:1px solid #ddd!important;break-inside:avoid;background:#fff!important;color:#111!important}.sectionhead{margin:14px 0 8px}#reportPage .cards{grid-template-columns:repeat(2,1fr)}#reportPage .panel{margin-bottom:8px}.muted,.small{color:#444!important}button{display:none!important}@page{size:auto;margin:14mm}}
 </style>
 </head>
 <body>
 <header class="top">
-  <div class="toprow">
-    <div>
-      <div class="brand">◈ الحرية المالية</div>
-      <div class="sub">خطوة واعية نحو مستقبل أفضل</div>
-    </div>
-    <div class="row" style="gap:8px;align-items:center">
-      <button class="btn soft theme-toggle" id="themeToggle" type="button" onclick="toggleTheme()" aria-label="تغيير المظهر">🌙</button>
-      <div class="month" id="monthLabel"></div>
-    </div>
-  </div>
-  <div class="hero">
-    <label>إجمالي دخلك الشهري — عدّل الرقم في أي وقت</label>
-    <div class="salaryline">
-      <input id="salary" type="number" min="0" step="0.01" inputmode="decimal" value="15000" aria-label="الراتب الشهري">
-      <span>جنيه</span>
-    </div>
-    <div class="hint">توزيع تلقائي حسب خطتك المالية · إجمالي النسب 100%</div>
-  </div>
+ <div class="toprow">
+  <div><div class="brand"><span class="logo"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 24V8h4v12h4V13h4v7h4V5h4v19H5Z" fill="#fff" opacity=".28"/><path d="m7 21 7-7 5 3 7-9M20 8h6v6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>الحرية المالية</div><div class="sub">خطوة واعية نحو مستقبل أفضل</div></div>
+  <div class="top-actions"><button class="topbtn" id="themeBtn" onclick="toggleTheme()" aria-label="تغيير المظهر">☾</button><button class="topbtn" onclick="openBudget()">توزيع الميزانية</button></div>
+ </div>
+ <div class="hero"><label>إجمالي دخلك الشهري</label><div class="salaryline"><input id="salary" type="number" min="0" step=".01" inputmode="decimal"><span>جنيه</span></div><div class="hint">يمكنك تعديل الدخل في أي وقت · بياناتك محفوظة على جهازك</div></div>
 </header>
-
 <main class="wrap">
 <section class="page active" id="homePage">
-  <div class="sectionhead"><h2>ملخص الشهر</h2><span class="muted" id="monthSub"></span></div>
-  <div class="summary">
-    <div class="sumtop"><strong>توزيع الدخل</strong><span>كل جنيه له هدف</span></div>
-    <div class="bar" id="distributionBar"></div>
-    <div class="legend" id="legend"></div>
-  </div>
-  <div class="sectionhead"><h2>ميزانيتك</h2><span class="muted">المتاح بعد المصروفات</span></div>
-  <div class="cards" id="categoryCards"></div>
-  <div class="sectionhead"><h2>نظرة سريعة</h2></div>
-  <div class="panel">
-    <div class="statgrid">
-      <div class="stat"><small>إجمالي المصروفات</small><strong id="totalSpent">0 ج.م</strong></div>
-      <div class="stat"><small>المتبقي من دخلك</small><strong id="totalLeft">0 ج.م</strong></div>
-    </div>
-    <div class="note">قاعدة التطبيق: تسجيل المصروف يخصم من ميزانية البند المختار فقط. لو صرفت أكثر من المخصص، سيظهر البند بالسالب حتى تلاحظ التجاوز.</div>
-  </div>
+ <div class="sectionhead"><h2>ملخص الشهر</h2><span class="muted" id="monthLabel"></span></div>
+ <div class="summary"><div class="split"><b>توزيع الدخل</b><span class="muted" id="budgetSum"></span></div><div class="sumbar" id="distribution"></div><div class="legend" id="legend"></div></div>
+ <div class="sectionhead"><h2>ميزانيتك</h2><span class="muted">المتبقي بعد المصروفات</span></div><div class="cards" id="categoryCards"></div>
+ <div class="sectionhead"><h2>نظرة سريعة</h2></div><div class="panel"><div class="statgrid"><div class="stat"><small>إجمالي المصروفات</small><strong id="spentTotal">0 ج.م</strong></div><div class="stat"><small>المتبقي من الدخل</small><strong id="incomeLeft">0 ج.م</strong></div><div class="stat"><small>أهداف الادخار المفتوحة</small><strong id="goalQuick">0</strong></div><div class="stat"><small>إجمالي الديون المتبقية عليّ</small><strong id="debtQuick">0 ج.م</strong></div></div><div class="note">المبالغ المسجلة في بند الادخار تُوزّع على أهدافك وفق اختيارك، وتُحتسب مرة واحدة فقط. تعديل أو حذف المصروف يعيد احتساب مساهمته تلقائيًا.</div></div>
 </section>
-
 <section class="page" id="expensesPage">
-  <div class="sectionhead"><h2>المصروفات</h2><button class="btn primary" onclick="openExpense()">＋ إضافة مصروف</button></div>
-  <div class="panel">
-    <div class="row"><strong>مصروفات الشهر</strong><strong id="expenseTotal">0 ج.م</strong></div>
-    <div id="expenseList" class="empty">لسه مفيش مصروفات مسجلة.</div>
-  </div>
+ <div class="sectionhead"><h2>المصروفات</h2><button class="btn primary" onclick="openExpense()">＋ إضافة مصروف</button></div>
+ <div class="panel"><div class="split"><b>عمليات الشهر</b><strong id="expenseTotal">0 ج.م</strong></div><div class="field"><label>عرض شهر</label><input type="month" id="expenseMonth" onchange="renderExpenses()"></div><div id="expenseList" class="empty">لا توجد مصروفات.</div></div>
 </section>
-
 <section class="page" id="goalsPage">
-  <div class="sectionhead"><h2>أهداف الادخار</h2><button class="btn primary" onclick="openGoal()">＋ هدف جديد</button></div>
-  <div id="goalsList" class="panel empty">أنشئ هدفك الأول، مثل شراء لابتوب أو تكوين صندوق طوارئ.</div>
-  <div class="sectionhead"><h2>متابعة الديون</h2><button class="btn soft" onclick="openDebt()">＋ إضافة دين</button></div>
-  <div id="debtsList" class="panel empty">سجّل ديونك وتابع المبلغ المتبقي منها.</div>
+ <div class="sectionhead"><h2>أهداف الادخار</h2><button class="btn primary" onclick="openGoal()">＋ هدف جديد</button></div><div class="panel" id="goalsList"></div>
+ <div class="sectionhead"><h2>سجل حركات الادخار</h2></div><div class="panel" id="savingHistory"></div>
 </section>
-
+<section class="page" id="debtsPage">
+ <div class="sectionhead"><h2>إدارة الديون</h2><button class="btn primary" onclick="openDebt()">＋ إضافة دين</button></div>
+ <div class="cards"><div class="stat"><small>ديون عليّ متبقية</small><strong id="owedTotal">0 ج.م</strong></div><div class="stat"><small>ديون لي مستحقة</small><strong id="receivableTotal">0 ج.م</strong></div></div>
+ <div class="sectionhead"><h2>ديون عليّ</h2><button class="btn soft mini" onclick="openPayment('owed')">تسجيل سداد</button></div><div class="panel" id="owedList"></div>
+ <div class="sectionhead"><h2>ديون لي</h2><button class="btn soft mini" onclick="openPayment('receivable')">تسجيل تحصيل</button></div><div class="panel" id="receivableList"></div>
+ <div class="sectionhead"><h2>سجل الدفعات</h2></div><div class="panel" id="paymentHistory"></div>
+</section>
 <section class="page" id="reportPage">
-  <div class="sectionhead">
-    <h2>التقرير الشهري</h2>
-    <input id="reportMonth" type="month" onchange="reportMonth=this.value;renderReport()">
-  </div>
-  <div class="cards">
-    <div class="panel"><small class="muted">الدخل المسجل</small><div class="amount" id="reportIncome">0 ج.م</div></div>
-    <div class="panel"><small class="muted">إجمالي المصروفات</small><div class="amount" id="reportSpent">0 ج.م</div></div>
-    <div class="panel"><small class="muted">المتبقي</small><div class="amount" id="reportLeft">0 ج.م</div></div>
-    <div class="panel"><small class="muted">عدد العمليات</small><div class="amount" id="reportCount">0</div></div>
-  </div>
-  <div class="sectionhead"><h2>توزيع المصروفات</h2></div>
-  <div class="panel" id="reportCategories"></div>
-  <div class="sectionhead"><h2>أكبر مصروف</h2></div>
-  <div class="panel" id="reportTopExpense"></div>
-  <div class="sectionhead"><h2>مقارنة بالشهر السابق</h2></div>
-  <div class="panel" id="reportComparison"></div>
-  <button class="btn soft full" onclick="window.print()">طباعة التقرير / حفظ PDF</button>
+ <div class="sectionhead"><h2>التقرير الشهري</h2><input type="month" id="reportMonth" onchange="renderReport()"></div>
+ <div class="cards"><div class="stat"><small>الدخل</small><strong id="rIncome">0</strong></div><div class="stat"><small>المصروفات</small><strong id="rSpent">0</strong></div><div class="stat"><small>المتبقي</small><strong id="rLeft">0</strong></div><div class="stat"><small>عدد العمليات</small><strong id="rCount">0</strong></div></div>
+ <div class="sectionhead"><h2>تفاصيل البنود</h2></div><div class="panel" id="rCats"></div><div class="sectionhead"><h2>مقارنة بالشهر السابق</h2></div><div class="panel" id="rCompare"></div>
+ <div class="no-print" style="height:16px"></div><button class="btn primary full no-print" onclick="window.print()">طباعة التقرير / حفظ PDF</button>
 </section>
-
 <section class="page" id="historyPage">
-  <div class="sectionhead"><h2>السجل المالي</h2><span class="muted">الشهر الحالي</span></div>
-  <div class="panel">
-    <div class="statgrid">
-      <div class="stat"><small>الدخل المسجل</small><strong id="histIncome">0 ج.م</strong></div>
-      <div class="stat"><small>عدد العمليات</small><strong id="histCount">0</strong></div>
-    </div>
-    <div id="historyList" class="empty">ستظهر عملياتك هنا.</div>
-  </div>
-  <div class="sectionhead"><h2>بياناتك</h2></div>
-  <div class="panel">
-    <p class="small">بياناتك محفوظة محليًا على هذا الجهاز والمتصفح، ولا يتم إرسالها إلى خادم.</p>
-    <button class="btn soft full" onclick="exportData()">تصدير نسخة احتياطية</button>
-    <div style="height:9px"></div>
-    <button class="btn danger full" onclick="resetData()">مسح كل البيانات</button>
-  </div>
+ <div class="sectionhead"><h2>سجل العمليات</h2></div><div class="panel"><div id="allHistory"></div></div>
+ <div class="sectionhead"><h2>النسخ الاحتياطي والبيانات</h2></div><div class="panel">
+ <button class="btn soft full" onclick="exportBackup()">تصدير نسخة JSON</button><div style="height:9px"></div><label class="btn ghost full" style="display:block;text-align:center">استيراد نسخة JSON<input id="importFile" type="file" accept="application/json,.json" hidden onchange="importBackup(event)"></label><div style="height:9px"></div><button class="btn danger full" onclick="confirmReset()">حذف جميع البيانات</button>
+ <p class="small">تُخزّن البيانات محليًا على هذا الجهاز والمتصفح. احتفظ بنسخة احتياطية دورية.</p></div>
 </section>
 </main>
-
-<nav class="tabs">
-  <button class="tab" data-page="homePage" onclick="showPage('homePage',this)"><b>⌂</b>الرئيسية</button>
-  <button class="tab" data-page="expensesPage" onclick="showPage('expensesPage',this)"><b>＋</b>المصروفات</button>
-  <button class="tab" data-page="goalsPage" onclick="showPage('goalsPage',this)"><b>◎</b>الأهداف والديون</button>
-  <button class="tab" data-page="reportPage" onclick="showPage('reportPage',this)"><b>▥</b>التقرير</button>
+<nav class="tabs no-print">
+ <button class="tab active" data-page="homePage" onclick="showPage('homePage',this)"><b>⌂</b>الرئيسية</button>
+ <button class="tab" data-page="expensesPage" onclick="showPage('expensesPage',this)"><b>＋</b>المصروفات</button>
+ <button class="tab" data-page="goalsPage" onclick="showPage('goalsPage',this)"><b>◎</b>الادخار</button>
+ <button class="tab" data-page="debtsPage" onclick="showPage('debtsPage',this)"><b>⇄</b>الديون</button>
+ <button class="tab" data-page="reportPage" onclick="showPage('reportPage',this)"><b>▤</b>التقرير</button>
 </nav>
-
-<div class="modalbg" id="modalBg" onclick="if(event.target===this)closeModal()">
-  <div class="modal">
-    <div class="row"><h3 id="modalTitle">إضافة</h3><button class="close" onclick="closeModal()">×</button></div>
-    <div id="modalContent"></div>
-  </div>
-</div>
-<div class="toast" id="toast"></div>
-
+<div class="modalbg" id="modalBg" role="dialog" aria-modal="true" onclick="if(event.target===this)closeModal()"><div class="modal"><div class="row"><h3 id="modalTitle">تفاصيل</h3><button class="close" onclick="closeModal()" aria-label="إغلاق">×</button></div><div id="modalContent"></div></div></div>
+<div class="toast" id="toast" role="status"></div>
 <script>
-const cats=[
-{id:'needs',name:'الأساسيات',pct:55,icon:'⌂',color:'#24866d',bg:'#e9f5f0'},
-{id:'fun',name:'الرفاهية',pct:5,icon:'✧',color:'#c99535',bg:'#fbf4e6'},
-{id:'debt',name:'الديون',pct:10,icon:'▣',color:'#c96c70',bg:'#faeded'},
-{id:'saving',name:'الادخار',pct:15,icon:'▤',color:'#668bb8',bg:'#edf2f8'},
-{id:'invest',name:'الاستثمار',pct:10,icon:'↗',color:'#8878ad',bg:'#f1eef7'},
-{id:'charity',name:'الصدقات',pct:5,icon:'♡',color:'#c58b6c',bg:'#f8eee7'}
+'use strict';
+const KEY='financialFreedom.v1', THEME='financialFreedom.theme';
+const CATS=[
+ {id:'needs',name:'الأساسيات',pct:55,icon:'⌂',color:'#24866d',bg:'#e9f5f0'},
+ {id:'fun',name:'الرفاهية',pct:5,icon:'✧',color:'#c99535',bg:'#fbf4e6'},
+ {id:'debt',name:'الديون',pct:10,icon:'▣',color:'#c96c70',bg:'#faeded'},
+ {id:'saving',name:'الادخار',pct:15,icon:'▤',color:'#668bb8',bg:'#edf2f8'},
+ {id:'invest',name:'الاستثمار',pct:10,icon:'↗',color:'#8878ad',bg:'#f1eef7'},
+ {id:'charity',name:'الصدقات',pct:5,icon:'♡',color:'#c58b6c',bg:'#f8eee7'}
 ];
-
-const KEY='financialFreedom.v1';
-let state=load();
-let currentMonth=monthKey();
-let reportMonth=monthKey();
-
-function monthKey(){
-  let d=new Date();
-  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
-}
-function load(){
-  try{
-    return JSON.parse(localStorage.getItem(KEY))||{salary:15000,expenses:[],goals:[],debts:[]};
-  }catch(e){
-    return{salary:15000,expenses:[],goals:[],debts:[]};
+const today=()=>new Date().toISOString().slice(0,10), monthKey=(d=today())=>String(d).slice(0,7), uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+let state=loadState(), expenseMonth=monthKey(), reportMonth=monthKey(), toastTimer;
+function defaultState(){return {version:2,salary:15000,budgets:Object.fromEntries(CATS.map(c=>[c.id,c.pct])),expenses:[],goals:[],debts:[],paymentGroups:[]};}
+function loadState(){
+ try{
+  const raw=JSON.parse(localStorage.getItem(KEY)||'null'); if(!raw||typeof raw!=='object')return defaultState();
+  const s=defaultState(); Object.assign(s,raw);
+  s.salary=validNum(raw.salary,15000); s.expenses=Array.isArray(raw.expenses)?raw.expenses.map(normalizeExpense).filter(Boolean):[];
+  s.goals=Array.isArray(raw.goals)?raw.goals.map(g=>({id:String(g.id??uid()),name:String(g.name||'هدف بدون اسم'),target:Math.max(0,validNum(g.target,0)),manualSaved:Math.max(0,validNum(g.manualSaved,validNum(g.saved,0)))})): [];
+  s.budgets={...s.budgets,...(raw.budgets||{})};
+  CATS.forEach(c=>s.budgets[c.id]=validNum(s.budgets[c.id],c.pct));
+  s.debts=Array.isArray(raw.debts)?raw.debts.map(d=>({id:String(d.id??uid()),name:String(d.name||'دين'),type:d.type==='receivable'?'receivable':'owed',total:Math.max(0,validNum(d.total,0)),createdAt:d.createdAt||today()})): [];
+  s.paymentGroups=Array.isArray(raw.paymentGroups)?raw.paymentGroups:[];
+  // Convert legacy debt balances into an opening payment record, without losing their original remaining amount.
+  if(!raw.version || !Array.isArray(raw.paymentGroups)){
+   raw.debts?.forEach(d=>{if(d&&d.id!=null&&Number.isFinite(+d.total)&&Number.isFinite(+d.remaining)){let paid=Math.max(0,+d.total-(+d.remaining));if(paid>0)s.paymentGroups.push({id:uid(),type:'owed',date:d.createdAt||today(),note:'رصيد سابق قبل تحديث التطبيق',allocations:[{debtId:String(d.id),amount:paid}]});}});
   }
+  s.expenses.forEach(x=>{if(x.cat==='saving'&&!x.savingMode)x.savingMode='equal';if(!Array.isArray(x.allocations))x.allocations=[];});
+  s.version=2; return s;
+ }catch(e){return defaultState();}
 }
-function save(){localStorage.setItem(KEY,JSON.stringify(state))}
-function fmt(n){return (Number(n)||0).toLocaleString('en-US',{maximumFractionDigits:2})}
-function cash(n){return fmt(n)+' ج.م'}
-function monthName(){return new Date().toLocaleDateString('ar-EG',{month:'long',year:'numeric'})}
-function monthExpenses(){return state.expenses.filter(x=>x.month===currentMonth)}
-function spent(id){return monthExpenses().filter(x=>x.cat===id).reduce((s,x)=>s+x.amount,0)}
-function budget(c){return state.salary*c.pct/100}
-function left(c){return budget(c)-spent(c.id)}
-
-function render(){
-  document.getElementById('monthLabel').textContent=monthName();
-  document.getElementById('monthSub').textContent=monthName();
-  document.getElementById('distributionBar').innerHTML=cats.map(c=>`<div style="width:${c.pct}%;background:${c.color}"></div>`).join('');
-  document.getElementById('legend').innerHTML=cats.map(c=>`<div class="legenditem"><i class="dot" style="background:${c.color}"></i>${c.name} ${c.pct}%</div>`).join('');
-  document.getElementById('categoryCards').innerHTML=cats.map(c=>{
-    let b=budget(c),s=spent(c.id),l=left(c),used=b?Math.min(100,Math.max(0,s/b*100)):0;
-    return `<div class="cat">
-      <div class="cathead">
-        <div class="ico" style="background:${c.bg};color:${c.color}">${c.icon}</div>
-        <div><div class="catname">${c.name}</div><div class="pct">${c.pct}% من الدخل</div></div>
-      </div>
-      <div class="amount">${cash(b)}</div>
-      <div class="remain" style="color:${l<0?'#c34e48':'#75847d'}">المتبقي: ${cash(l)}</div>
-      <div class="progress"><i style="width:${used}%;background:${c.color}"></i></div>
-    </div>`;
-  }).join('');
-  let total=monthExpenses().reduce((s,x)=>s+x.amount,0);
-  document.getElementById('totalSpent').textContent=cash(total);
-  document.getElementById('totalLeft').textContent=cash(state.salary-total);
-  document.getElementById('expenseTotal').textContent=cash(total);
-  renderExpenses();
-  renderGoals();
-  renderHistory();
-  renderReport();
+function normalizeExpense(x){
+ if(!x||typeof x!=='object')return null; const amount=validNum(x.amount,NaN),date=String(x.date||today());
+ if(!Number.isFinite(amount)||amount<=0)return null;
+ return {id:String(x.id??uid()),name:String(x.name||'مصروف'),amount,cat:CATS.some(c=>c.id===x.cat)?x.cat:'needs',date,month:String(x.month||monthKey(date)),savingMode:x.savingMode||null,savingGoalId:x.savingGoalId?String(x.savingGoalId):null,allocations:Array.isArray(x.allocations)?x.allocations:[]};
 }
-
-document.getElementById('salary').addEventListener('input',e=>{
-  let v=parseFloat(e.target.value);
-  state.salary=Number.isFinite(v)&&v>=0?v:0;
-  save();
-  render();
-});
-
-function showPage(id,btn){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  btn.classList.add('active');
-  render();
+function validNum(v,fallback=0){let n=Number(v);return Number.isFinite(n)?n:fallback;}
+function save(){localStorage.setItem(KEY,JSON.stringify(state));}
+function fmt(n){return (validNum(n)).toLocaleString('en-US',{maximumFractionDigits:2});}
+function cash(n){return fmt(n)+' ج.م';}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2400);}
+function openModal(title,html){document.getElementById('modalTitle').textContent=title;document.getElementById('modalContent').innerHTML=html;document.getElementById('modalBg').classList.add('show');}
+function closeModal(){document.getElementById('modalBg').classList.remove('show');}
+function confirmModal(title,message,onYes,label='تأكيد الحذف'){
+ openModal(title,`<p style="line-height:1.8;font-size:13px">${esc(message)}</p><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">إلغاء</button><button class="btn danger" id="confirmAction">${label}</button></div>`);
+ document.getElementById('confirmAction').onclick=()=>{closeModal();onYes();};
 }
-function openModal(title,html){
-  document.getElementById('modalTitle').textContent=title;
-  document.getElementById('modalContent').innerHTML=html;
-  document.getElementById('modalBg').classList.add('show');
+function showPage(id,btn){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t===btn));renderAll();}
+function monthExpenses(m=expenseMonth){return state.expenses.filter(x=>monthKey(x.date)===m);}
+function categorySpent(id,m=monthKey()){return state.expenses.filter(x=>monthKey(x.date)===m&&x.cat===id).reduce((a,x)=>a+x.amount,0);}
+function budget(c){return state.salary*validNum(state.budgets[c.id],c.pct)/100;}
+function allocatedForGoal(id){return state.expenses.filter(x=>x.cat==='saving').flatMap(x=>x.allocations||[]).filter(a=>String(a.goalId)===String(id)).reduce((s,a)=>s+validNum(a.amount),0);}
+function goalSaved(g){return validNum(g.manualSaved)+allocatedForGoal(g.id);}
+function debtPaid(d){return state.paymentGroups.filter(g=>g.type===d.type).flatMap(g=>g.allocations||[]).filter(a=>String(a.debtId)===String(d.id)).reduce((s,a)=>s+validNum(a.amount),0);}
+function debtRemaining(d){return Math.max(0,d.total-debtPaid(d));}
+function renderAll(){
+ document.getElementById('salary').value=state.salary;
+ const d=new Date();document.getElementById('monthLabel').textContent=d.toLocaleDateString('ar-EG',{month:'long',year:'numeric'});
+ renderHome();renderExpenses();renderGoals();renderDebts();renderReport();renderHistory();
 }
-function closeModal(){document.getElementById('modalBg').classList.remove('show')}
-function toast(s){
-  let t=document.getElementById('toast');
-  t.textContent=s;
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2200);
+function renderHome(){
+ const totalPct=CATS.reduce((s,c)=>s+validNum(state.budgets[c.id]),0);
+ document.getElementById('budgetSum').textContent='مجموع النسب: '+fmt(totalPct)+'%';
+ document.getElementById('distribution').innerHTML=CATS.map(c=>`<span style="width:${Math.max(0,validNum(state.budgets[c.id]))}%;background:${c.color}"></span>`).join('');
+ document.getElementById('legend').innerHTML=CATS.map(c=>`<div class="legenditem"><i class="dot" style="background:${c.color}"></i>${c.name} ${fmt(state.budgets[c.id])}%</div>`).join('');
+ document.getElementById('categoryCards').innerHTML=CATS.map(c=>{
+  const b=budget(c),s=categorySpent(c.id),left=b-s,p=b?Math.min(100,Math.max(0,s/b*100)):0;
+  return `<div class="cat"><div class="cathead"><div class="ico" style="background:${c.bg};color:${c.color}">${c.icon}</div><div><div class="catname">${c.name}</div><div class="pct">${fmt(state.budgets[c.id])}% من الدخل</div></div></div><div class="amount">${cash(b)}</div><div class="remain" style="color:${left<0?'var(--red)':'var(--muted)'}">المتبقي: ${cash(left)}</div><div class="progress"><i style="width:${p}%;background:${c.color}"></i></div></div>`;
+ }).join('');
+ const spent=monthExpenses(monthKey()).reduce((s,x)=>s+x.amount,0);
+ document.getElementById('spentTotal').textContent=cash(spent);document.getElementById('incomeLeft').textContent=cash(state.salary-spent);
+ document.getElementById('goalQuick').textContent=state.goals.filter(g=>goalSaved(g)<g.target).length;
+ document.getElementById('debtQuick').textContent=cash(state.debts.filter(d=>d.type==='owed').reduce((s,d)=>s+debtRemaining(d),0));
 }
-
-function openExpense(){
-  openModal('تسجيل مصروف',`<form onsubmit="addExpense(event)">
-    <div class="field"><label>اسم المصروف</label><input id="exName" required placeholder="مثال: مشتريات البيت"></div>
-    <div class="field"><label>المبلغ بالجنيه</label><input id="exAmount" required type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="0"></div>
-    <div class="field"><label>البند</label><select id="exCat">${cats.map(c=>`<option value="${c.id}">${c.name} — ${c.pct}%</option>`).join('')}</select></div>
-    <div class="field"><label>التاريخ</label><input id="exDate" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
-    <button class="btn primary full" type="submit">حفظ المصروف</button>
-  </form>`);
+document.getElementById('salary').addEventListener('change',e=>{state.salary=Math.max(0,validNum(e.target.value));save();renderAll();});
+function openBudget(){
+ openModal('تعديل توزيع الميزانية',`<form id="budgetForm">${CATS.map(c=>`<div class="field"><label>${c.name} (%)</label><input type="number" min="0" max="100" step=".5" name="${c.id}" value="${state.budgets[c.id]}"></div>`).join('')}<div class="note" id="budgetTotal">المجموع الحالي: ${CATS.reduce((s,c)=>s+state.budgets[c.id],0)}%</div><div class="modal-actions"><button type="button" class="btn ghost" onclick="closeModal()">إلغاء</button><button class="btn primary">حفظ التوزيع</button></div></form>`);
+ const form=document.getElementById('budgetForm'),total=()=>[...form.querySelectorAll('input')].reduce((s,i)=>s+validNum(i.value),0);
+ form.addEventListener('input',()=>document.getElementById('budgetTotal').textContent='المجموع الحالي: '+fmt(total())+'%');
+ form.onsubmit=e=>{e.preventDefault();let sum=total();if(sum>100.0001)return toast('مجموع النسب لا يمكن أن يتجاوز 100%');CATS.forEach(c=>state.budgets[c.id]=validNum(form.elements[c.id].value));save();closeModal();renderAll();toast('تم تحديث الميزانية');};
 }
-function addExpense(e){
-  e.preventDefault();
-  let amount=Number(document.getElementById('exAmount').value);
-  if(amount<=0)return;
-  let date=document.getElementById('exDate').value;
-  state.expenses.unshift({
-    id:Date.now(),
-    name:document.getElementById('exName').value.trim(),
-    amount,
-    cat:document.getElementById('exCat').value,
-    date,
-    month:date.slice(0,7)
-  });
-  save();closeModal();render();toast('تم تسجيل المصروف');
+function openExpense(id=null){
+ const x=id?state.expenses.find(e=>e.id===id):null;if(id&&!x)return;
+ const isSaving=(x?.cat||'needs')==='saving';
+ openModal(x?'تعديل المصروف':'إضافة مصروف',`<form id="expenseForm">
+ <div class="field"><label>اسم المصروف</label><input name="name" required maxlength="90" value="${esc(x?.name||'')}" placeholder="مثال: مشتريات البيت"></div>
+ <div class="field"><label>المبلغ بالجنيه</label><input name="amount" type="number" min=".01" step=".01" required value="${x?.amount??''}"></div>
+ <div class="field"><label>البند</label><select name="cat">${CATS.map(c=>`<option value="${c.id}" ${(x?.cat||'needs')===c.id?'selected':''}>${c.name}</option>`).join('')}</select></div>
+ <div class="field"><label>التاريخ</label><input name="date" type="date" required value="${x?.date||today()}"></div>
+ <div id="savingOptions" style="display:${isSaving?'block':'none'}"><div class="field"><label>توجيه مبلغ الادخار</label><select name="savingMode"><option value="equal" ${(x?.savingMode||'equal')==='equal'?'selected':''}>توزيع بالتساوي على كل الأهداف المفتوحة</option><option value="specific" ${x?.savingMode==='specific'?'selected':''}>اختيار هدف محدد</option></select></div><div class="field" id="goalChoice" style="display:${x?.savingMode==='specific'?'block':'none'}"><label>الهدف</label><select name="savingGoalId">${state.goals.filter(g=>goalSaved(g)<g.target||g.id===x?.savingGoalId).map(g=>`<option value="${esc(g.id)}" ${String(g.id)===String(x?.savingGoalId)?'selected':''}>${esc(g.name)} — متبقي ${cash(Math.max(0,g.target-(goalSaved(g)-(x?allocatedForExpense(x.id,g.id):0))))}</option>`).join('')}</select></div></div>
+ <div class="modal-actions"><button type="button" class="btn ghost" onclick="closeModal()">إلغاء</button><button class="btn primary">حفظ</button></div></form>`);
+ const f=document.getElementById('expenseForm'),cat=f.elements.cat,mode=f.elements.savingMode;
+ function updateSaving(){const on=cat.value==='saving';document.getElementById('savingOptions').style.display=on?'block':'none';document.getElementById('goalChoice').style.display=on&&mode.value==='specific'?'block':'none';}
+ cat.onchange=updateSaving;mode.onchange=updateSaving;
+ f.onsubmit=e=>{e.preventDefault();const fd=new FormData(f),amount=validNum(fd.get('amount')),name=String(fd.get('name')).trim(),date=String(fd.get('date')),category=String(fd.get('cat'));if(!name||amount<=0||!date)return toast('راجع البيانات المطلوبة');
+ let record={id:x?.id||uid(),name,amount,cat:category,date,month:monthKey(date),savingMode:category==='saving'?String(fd.get('savingMode')||'equal'):null,savingGoalId:category==='saving'?String(fd.get('savingGoalId')||''):null,allocations:[]};
+ if(category==='saving'){const alloc=allocateSaving(record);if(!alloc.ok)return toast(alloc.message);record.allocations=alloc.allocations;}
+ if(x){state.expenses=state.expenses.map(e=>e.id===x.id?record:e);}else state.expenses.unshift(record);
+ save();closeModal();renderAll();toast(x?'تم تعديل المصروف وتحديث الأهداف':'تم تسجيل المصروف');};
 }
-
+function allocatedForExpense(expenseId,goalId){const x=state.expenses.find(e=>e.id===expenseId);return (x?.allocations||[]).filter(a=>String(a.goalId)===String(goalId)).reduce((s,a)=>s+a.amount,0);}
+function allocateSaving(record){
+ const goals=record.savingMode==='specific'?state.goals.filter(g=>String(g.id)===String(record.savingGoalId)):state.goals.filter(g=>goalSaved(g)-(record.id?allocatedForExpense(record.id,g.id):0)<g.target);
+ if(!goals.length)return {ok:false,message:record.savingMode==='specific'?'اختر هدفًا صالحًا':'لا توجد أهداف ادخار مفتوحة. أضف هدفًا أو اختر بندًا آخر.'};
+ if(record.savingMode==='specific'&&!goals[0])return {ok:false,message:'الهدف المحدد غير موجود'};
+ let remain=record.amount,allocations=[];
+ if(record.savingMode==='specific'){
+  const g=goals[0],available=Math.max(0,g.target-(goalSaved(g)-(record.id?allocatedForExpense(record.id,g.id):0)));
+  if(record.amount>available+.000001)return {ok:false,message:'المبلغ أكبر من المتبقي في الهدف المحدد ('+cash(available)+')'};
+  allocations=[{goalId:g.id,amount:record.amount}];
+ }else{
+  const open=goals.filter(g=>g.target>goalSaved(g)-(record.id?allocatedForExpense(record.id,g.id):0));
+  if(!open.length)return {ok:false,message:'كل أهداف الادخار مكتملة.'};
+  // Equal split among open goals; any rounding remainder is assigned to the last goal.
+  const each=Math.floor((record.amount/open.length)*100)/100;
+  open.forEach((g,i)=>{let amount=i===open.length-1?Math.round((remain)*100)/100:each;let cap=Math.max(0,g.target-(goalSaved(g)-(record.id?allocatedForExpense(record.id,g.id):0)));amount=Math.min(amount,cap);if(amount>0){allocations.push({goalId:g.id,amount});remain=Math.round((remain-amount)*100)/100;}});
+  if(remain>0.001)return {ok:false,message:'مجموع المبلغ يتجاوز المساحة المتبقية في الأهداف المفتوحة. اختر هدفًا محددًا أو حدّث الأهداف.'};
+ }
+ return {ok:true,allocations};
+}
+function deleteExpense(id){confirmModal('حذف المصروف','سيتم حذف المصروف ومساهمته المرتبطة بهدف الادخار، وإعادة حساب الأهداف. هل تريد المتابعة؟',()=>{state.expenses=state.expenses.filter(x=>x.id!==id);save();renderAll();toast('تم حذف المصروف وتحديث الأهداف');});}
 function renderExpenses(){
-  let el=document.getElementById('expenseList'),arr=monthExpenses();
-  el.className=arr.length?'':'empty';
-  el.innerHTML=arr.length?arr.map(x=>{
-    let c=cats.find(c=>c.id===x.cat);
-    return `<div class="listitem row">
-      <div>
-        <strong style="font-size:13px">${esc(x.name)}</strong>
-        <div class="small">${c?.name||''} · ${x.date}</div>
-      </div>
-      <div class="row" style="gap:8px">
-        <strong style="font-size:13px">${cash(x.amount)}</strong>
-        <button class="btn soft" onclick="openEditExpense(${x.id})">تعديل</button>
-        <button class="close" onclick="deleteExpense(${x.id})">×</button>
-      </div>
-    </div>`;
-  }).join(''):'لسه مفيش مصروفات مسجلة.';
+ const input=document.getElementById('expenseMonth');if(input&&input.value!==expenseMonth)input.value=expenseMonth;
+ const arr=monthExpenses(),el=document.getElementById('expenseList');document.getElementById('expenseTotal').textContent=cash(arr.reduce((s,x)=>s+x.amount,0));
+ el.className=arr.length?'':'empty';el.innerHTML=arr.length?arr.map(x=>{let c=CATS.find(c=>c.id===x.cat);return `<div class="listitem split"><div><b>${esc(x.name)}</b><div class="small">${c?.name||'غير مصنف'} · ${esc(x.date)}</div></div><div class="actions" style="align-items:center"><b>${cash(x.amount)}</b><button class="btn soft mini" onclick="openExpense('${x.id}')">تعديل</button><button class="btn danger mini" onclick="deleteExpense('${x.id}')">حذف</button></div></div>`;}).join(''):'لا توجد مصروفات في هذا الشهر.';
 }
-
-function openEditExpense(id){
-  let x=state.expenses.find(e=>e.id===id);
-  if(!x)return toast('المصروف غير موجود');
-  openModal('تعديل المصروف',`
-    <form onsubmit="saveExpenseEdit(event,${x.id})">
-      <div class="field">
-        <label>اسم المصروف</label>
-        <input id="exName" required value="${esc(x.name)}">
-      </div>
-      <div class="field">
-        <label>المبلغ بالجنيه</label>
-        <input id="exAmount" required type="number" min="0.01" step="0.01" value="${x.amount}">
-      </div>
-      <div class="field">
-        <label>البند</label>
-        <select id="exCat">
-          ${cats.map(c=>`<option value="${c.id}" ${c.id===x.cat?'selected':''}>${c.name} — ${c.pct}%</option>`).join('')}
-        </select>
-      </div>
-      <div class="field">
-        <label>التاريخ</label>
-        <input id="exDate" type="date" required value="${x.date}">
-      </div>
-      <button class="btn primary full" type="submit">حفظ التعديلات</button>
-    </form>
-  `);
+document.getElementById('expenseMonth').value=expenseMonth;
+function openGoal(id=null){
+ const g=id?state.goals.find(x=>x.id===id):null;if(id&&!g)return;
+ openModal(g?'تعديل هدف الادخار':'هدف ادخار جديد',`<form id="goalForm"><div class="field"><label>اسم الهدف</label><input name="name" required maxlength="80" value="${esc(g?.name||'')}" placeholder="مثال: شراء لابتوب"></div><div class="field"><label>المبلغ المستهدف</label><input name="target" type="number" min=".01" step=".01" required value="${g?.target??''}"></div>${g?`<div class="field"><label>مدخرات يدوية (لا تشمل إضافات المصروفات)</label><input name="manualSaved" type="number" min="0" step=".01" value="${g.manualSaved}"></div>`:`<div class="field"><label>مدخرات يدوية أولية (اختياري)</label><input name="manualSaved" type="number" min="0" step=".01" value="0"></div>`}<div class="modal-actions"><button type="button" class="btn ghost" onclick="closeModal()">إلغاء</button><button class="btn primary">حفظ الهدف</button></div></form>`);
+ document.getElementById('goalForm').onsubmit=e=>{e.preventDefault();const f=e.currentTarget,fd=new FormData(f),obj={id:g?.id||uid(),name:String(fd.get('name')).trim(),target:validNum(fd.get('target')),manualSaved:Math.max(0,validNum(fd.get('manualSaved')))};if(!obj.name||obj.target<=0)return toast('أدخل اسمًا ومبلغًا صحيحًا');if(g)state.goals=state.goals.map(x=>x.id===g.id?obj:x);else state.goals.push(obj);save();closeModal();renderAll();toast('تم حفظ الهدف');};
 }
-
-function saveExpenseEdit(e,id){
-  e.preventDefault();
-  let x=state.expenses.find(e=>e.id===id);
-  if(!x)return toast('المصروف غير موجود');
-  let name=document.getElementById('exName').value.trim();
-  let amount=Number(document.getElementById('exAmount').value);
-  let cat=document.getElementById('exCat').value;
-  let date=document.getElementById('exDate').value;
-  if(!name||!Number.isFinite(amount)||amount<=0||!date)return toast('راجع بيانات المصروف');
-  x.name=name;x.amount=amount;x.cat=cat;x.date=date;x.month=date.slice(0,7);
-  save();closeModal();render();toast('تم تعديل المصروف بنجاح');
-}
-function deleteExpense(id){
-  if(!confirm('هل أنت متأكد من حذف هذا المصروف؟'))return;
-  state.expenses=state.expenses.filter(x=>x.id!==id);
-  save();render();toast('تم حذف المصروف');
-}
-
-function openGoal(){
-  openModal('هدف ادخار جديد',`<form onsubmit="addGoal(event)">
-    <div class="field"><label>اسم الهدف</label><input id="gName" required placeholder="مثال: لابتوب"></div>
-    <div class="field"><label>المبلغ المستهدف</label><input id="gTarget" type="number" min="1" required placeholder="0"></div>
-    <div class="field"><label>المبلغ الذي ادخرته بالفعل</label><input id="gSaved" type="number" min="0" value="0"></div>
-    <button class="btn primary full">حفظ الهدف</button>
-  </form>`);
-}
-function addGoal(e){
-  e.preventDefault();
-  state.goals.push({
-    id:Date.now(),
-    name:document.getElementById('gName').value.trim(),
-    target:
-    +document.getElementById('gTarget').value,
-    saved:+document.getElementById('gSaved').value
-  });
-  save();closeModal();render();toast('تم إضافة الهدف');
-}
-function updateGoal(id){
-  let g=state.goals.find(x=>x.id===id);
-  let n=prompt('أدخل إجمالي المبلغ الذي ادخرته حتى الآن',g.saved);
-  if(n===null)return;
-  if(!Number.isFinite(+n)||+n<0)return toast('أدخل مبلغًا صحيحًا');
-  g.saved=+n;save();render();
-}
-function removeGoal(id){
-  state.goals=state.goals.filter(x=>x.id!==id);
-  save();render();
-}
+function deleteGoal(id){confirmModal('حذف هدف الادخار','سيتم حذف الهدف من القائمة. لن يتم حذف المصروفات الأصلية، لكن مساهماتها لن تظهر ضمن هدف محذوف. هل تريد المتابعة؟',()=>{state.goals=state.goals.filter(g=>g.id!==id);state.expenses.forEach(x=>x.allocations=(x.allocations||[]).filter(a=>String(a.goalId)!==String(id)));save();renderAll();toast('تم حذف الهدف');});}
 function renderGoals(){
-  let el=document.getElementById('goalsList');
-  el.className=state.goals.length?'panel':'panel empty';
-  el.innerHTML=state.goals.length?state.goals.map(g=>{
-    let p=Math.min(100,g.saved/g.target*100);
-    return `<div class="listitem">
-      <div class="row"><strong>${esc(g.name)}</strong><button class="close" onclick="removeGoal(${g.id})">×</button></div>
-      <div class="row small" style="margin-top:8px"><span>${cash(g.saved)} من ${cash(g.target)}</span><b>${p.toFixed(0)}%</b></div>
-      <div class="goalbar"><i style="width:${p}%"></i></div>
-      <button class="btn soft" onclick="updateGoal(${g.id})">تحديث المدخرات</button>
-    </div>`;
-  }).join(''):'أنشئ هدفك الأول، مثل شراء لابتوب أو تكوين صندوق طوارئ.';
-
-  let d=document.getElementById('debtsList');
-  d.className=state.debts.length?'panel':'panel empty';
-  d.innerHTML=state.debts.length?state.debts.map(x=>`
-    <div class="listitem">
-      <div class="row"><strong>${esc(x.name)}</strong><button class="close" onclick="removeDebt(${x.id})">×</button></div>
-      <div class="small" style="margin-top:6px">المتبقي: ${cash(x.remaining)} من ${cash(x.total)}</div>
-      <div class="goalbar"><i style="width:${Math.max(0,Math.min(100,(1-x.remaining/x.total)*100))}%;background:var(--red)"></i></div>
-      <button class="btn soft" onclick="payDebt(${x.id})">تسجيل سداد</button>
-    </div>`).join(''):'سجّل ديونك وتابع المبلغ المتبقي منها.';
+ const el=document.getElementById('goalsList');el.innerHTML=state.goals.length?state.goals.map(g=>{let saved=goalSaved(g),remaining=Math.max(0,g.target-saved),p=g.target?Math.min(100,saved/g.target*100):0;return `<div class="listitem"><div class="split"><b>${esc(g.name)}</b><span class="badge">${p.toFixed(0)}% مكتمل</span></div><div class="split small" style="margin-top:8px"><span>تم ادخاره: ${cash(saved)}</span><span>المتبقي: ${cash(remaining)}</span></div><div class="goalbar"><i style="width:${p}% ;background:var(--blue)"></i></div><div class="small">منه ${cash(g.manualSaved)} مدخرات يدوية · ${cash(saved-g.manualSaved)} من المصروفات</div><div class="actions" style="margin-top:10px"><button class="btn soft mini" onclick="openGoal('${g.id}')">تعديل</button><button class="btn danger mini" onclick="deleteGoal('${g.id}')">حذف</button></div></div>`;}).join(''):'<div class="empty">أنشئ هدفك الأول مثل شراء لابتوب أو السفر.</div>';
+ const history=document.getElementById('savingHistory'),rows=state.expenses.filter(x=>x.cat==='saving').sort((a,b)=>b.date.localeCompare(a.date));
+ history.innerHTML=rows.length?rows.map(x=>`<div class="listitem"><div class="split"><b>${esc(x.name)}</b><strong>${cash(x.amount)}</strong></div><div class="small">${x.date} · ${x.savingMode==='specific'?'هدف محدد':'توزيع متساوٍ'}</div><div class="small">${(x.allocations||[]).map(a=>{let g=state.goals.find(g=>String(g.id)===String(a.goalId));return `${esc(g?.name||'هدف محذوف')}: ${cash(a.amount)}`;}).join(' · ')}</div></div>`).join(''):'<div class="empty">لا توجد إضافات ادخار من المصروفات حتى الآن.</div>';
 }
-function openDebt(){
-  openModal('إضافة دين',`<form onsubmit="addDebt(event)">
-    <div class="field"><label>اسم الدين أو الجهة</label><input id="dName" required placeholder="مثال: قسط جهاز"></div>
-    <div class="field"><label>إجمالي الدين</label><input id="dTotal" type="number" min="1" required></div>
-    <div class="field"><label>المبلغ المتبقي</label><input id="dRemain" type="number" min="0" required></div>
-    <button class="btn primary full">حفظ الدين</button>
-  </form>`);
+function openDebt(id=null){
+ const d=id?state.debts.find(x=>x.id===id):null;if(id&&!d)return;
+ openModal(d?'تعديل الدين':'إضافة دين',`<form id="debtForm"><div class="field"><label>نوع الدين</label><select name="type" ${d?'disabled':''}><option value="owed" ${d?.type!=='receivable'?'selected':''}>دين عليّ (سأقوم بسداده)</option><option value="receivable" ${d?.type==='receivable'?'selected':''}>دين لي (سأقوم بتحصيله)</option></select></div><div class="field"><label>الشخص أو الجهة</label><input name="name" required value="${esc(d?.name||'')}"></div><div class="field"><label>إجمالي الدين</label><input name="total" type="number" min=".01" step=".01" required value="${d?.total??''}"></div><div class="modal-actions"><button type="button" class="btn ghost" onclick="closeModal()">إلغاء</button><button class="btn primary">حفظ</button></div></form>`);
+ document.getElementById('debtForm').onsubmit=e=>{e.preventDefault();let f=e.currentTarget,fd=new FormData(f),total=validNum(fd.get('total')),name=String(fd.get('name')).trim();if(!name||total<=0)return toast('راجع البيانات');if(d){if(total<debtPaid(d))return toast('إجمالي الدين لا يمكن أن يقل عن المبالغ المسددة');d.name=name;d.total=total;}else state.debts.push({id:uid(),type:String(fd.get('type')),name,total,createdAt:today()});save();closeModal();renderAll();toast('تم حفظ الدين');};
 }
-function addDebt(e){
-  e.preventDefault();
-  let total=+document.getElementById('dTotal').value;
-  let remaining=+document.getElementById('dRemain').value;
-  if(remaining>total)return toast('المتبقي لا يمكن أن يتجاوز إجمالي الدين');
-  state.debts.push({id:Date.now(),name:document.getElementById('dName').value,total,remaining});
-  save();closeModal();render();toast('تم إضافة الدين');
+function openPayment(type,groupId=null){
+ const group=groupId?state.paymentGroups.find(g=>g.id===groupId):null;
+ const debts=state.debts.filter(d=>d.type===type&&debtRemaining(d)>0 || group&&(group.allocations||[]).some(a=>String(a.debtId)===String(d.id)));
+ if(!debts.length)return toast('لا توجد ديون مفتوحة من هذا النوع');
+ const title=type==='owed'?'تسجيل سداد دين':'تسجيل تحصيل دين';
+ openModal(group?'تعديل الدفعة':title,`<form id="paymentForm"><div class="field"><label>طريقة التوزيع</label><select name="mode"><option value="equal" ${group?.mode!=='specific'?'selected':''}>توزيع بالتساوي على الديون المفتوحة</option><option value="specific" ${group?.mode==='specific'?'selected':''}>اختيار دين محدد</option></select></div><div class="field" id="debtChoice" style="display:${group?.mode==='specific'?'block':'none'}"><label>الدين</label><select name="debtId">${debts.map(d=>`<option value="${d.id}" ${String(d.id)===String(group?.allocations?.[0]?.debtId)?'selected':''}>${esc(d.name)} — متبقي ${cash(debtRemaining(d)+(group?.allocations||[]).filter(a=>String(a.debtId)===String(d.id)).reduce((s,a)=>s+a.amount,0))}</option>`).join('')}</select></div><div class="field"><label>المبلغ الإجمالي</label><input name="amount" type="number" min=".01" step=".01" required value="${group?.amount??''}"></div><div class="field"><label>التاريخ</label><input name="date" type="date" required value="${group?.date||today()}"></div><div class="field"><label>ملاحظة (اختياري)</label><input name="note" maxlength="100" value="${esc(group?.note||'')}"></div><div class="modal-actions"><button type="button" class="btn ghost" onclick="closeModal()">إلغاء</button><button class="btn primary">حفظ الدفعة</button></div></form>`);
+ const f=document.getElementById('paymentForm');f.elements.mode.onchange=()=>document.getElementById('debtChoice').style.display=f.elements.mode.value==='specific'?'block':'none';
+ f.onsubmit=e=>{e.preventDefault();let fd=new FormData(f),amount=validNum(fd.get('amount')),mode=String(fd.get('mode')),date=String(fd.get('date')),allocations=[];if(amount<=0)return toast('أدخل مبلغًا صحيحًا');
+ const available=debts.map(d=>({d,remaining:debtRemaining(d)+(group?.allocations||[]).filter(a=>String(a.debtId)===String(d.id)).reduce((s,a)=>s+a.amount,0)}));
+ if(mode==='specific'){let item=available.find(x=>String(x.d.id)===String(fd.get('debtId')));if(!item)return toast('اختر دينًا صحيحًا');if(amount>item.remaining+.000001)return toast('المبلغ أكبر من المتبقي على هذا الدين ('+cash(item.remaining)+')');allocations=[{debtId:item.d.id,amount}];}
+ else{let open=available.filter(x=>x.remaining>0),totalAvailable=open.reduce((s,x)=>s+x.remaining,0);if(amount>totalAvailable+.000001)return toast('المبلغ أكبر من إجمالي المتبقي على الديون ('+cash(totalAvailable)+')');let left=amount;while(left>.001){let active=open.filter(x=>x.remaining>0);if(!active.length)break;let share=Math.floor((left/active.length)*100)/100;if(share<=0)share=left;let progressed=0;for(let i=0;i<active.length&&left>.001;i++){let x=active[i],part=Math.min(x.remaining,i===active.length-1?left:share);if(part>0){let found=allocations.find(a=>String(a.debtId)===String(x.d.id));if(found)found.amount=Math.round((found.amount+part)*100)/100;else allocations.push({debtId:x.d.id,amount:part});x.remaining=Math.round((x.remaining-part)*100)/100;left=Math.round((left-part)*100)/100;progressed+=part;}}if(!progressed)break;}if(left>.001)return toast('تعذر توزيع المبلغ بالكامل');}
+ const obj={id:group?.id||uid(),type,mode,amount,date,note:String(fd.get('note')||''),allocations};if(group)state.paymentGroups=state.paymentGroups.map(g=>g.id===group.id?obj:g);else state.paymentGroups.unshift(obj);save();closeModal();renderAll();toast('تم حفظ الدفعة وتحديث الأرصدة');};
 }
-function payDebt(id){
-  let d=state.debts.find(x=>x.id===id);
-  let n=prompt('قيمة المبلغ المسدد','0');
-  if(n===null)return;
-  if(+n<=0||!Number.isFinite(+n))return toast('أدخل مبلغًا صحيحًا');
-  d.remaining=Math.max(0,d.remaining-(+n));
-  save();render();toast('تم تحديث الدين');
+function deletePayment(id){confirmModal('حذف الدفعة','سيتم إلغاء أثر هذه الدفعة وإعادة حساب المتبقي من الدين. هل تريد المتابعة؟',()=>{state.paymentGroups=state.paymentGroups.filter(g=>g.id!==id);save();renderAll();toast('تم حذف الدفعة');});}
+function deleteDebt(id){confirmModal('حذف الدين','سيتم حذف الدين وسجل الدفعات المرتبطة به. هل تريد المتابعة؟',()=>{state.debts=state.debts.filter(d=>d.id!==id);state.paymentGroups.forEach(g=>g.allocations=g.allocations.filter(a=>String(a.debtId)!==String(id)));state.paymentGroups=state.paymentGroups.filter(g=>g.allocations.length);save();renderAll();toast('تم حذف الدين');});}
+function renderDebts(){
+ for(const type of ['owed','receivable']){let arr=state.debts.filter(d=>d.type===type),total=arr.reduce((s,d)=>s+debtRemaining(d),0),el=document.getElementById(type==='owed'?'owedList':'receivableList');el.innerHTML=arr.length?arr.map(d=>{let paid=debtPaid(d),remain=debtRemaining(d),p=d.total?paid/d.total*100:0;return `<div class="listitem"><div class="split"><b>${esc(d.name)}</b><span class="badge">${p.toFixed(0)}% ${type==='owed'?'تم سداده':'تم تحصيله'}</span></div><div class="split small" style="margin-top:7px"><span>الإجمالي: ${cash(d.total)}</span><span>المدفوع: ${cash(paid)}</span></div><div class="split small"><span>المتبقي</span><b>${cash(remain)}</b></div><div class="goalbar"><i style="width:${p}%;background:${type==='owed'?'var(--red)':'var(--green)'}"></i></div><div class="actions" style="margin-top:9px"><button class="btn soft mini" onclick="openPayment('${type}',null)">تسجيل ${type==='owed'?'سداد':'تحصيل'}</button><button class="btn ghost mini" onclick="openDebt('${d.id}')">تعديل</button><button class="btn danger mini" onclick="deleteDebt('${d.id}')">حذف</button></div></div>`;}).join(''):'<div class="empty">لا توجد ديون مسجلة هنا.</div>';}
+ document.getElementById('owedTotal').textContent=cash(state.debts.filter(d=>d.type==='owed').reduce((s,d)=>s+debtRemaining(d),0));document.getElementById('receivableTotal').textContent=cash(state.debts.filter(d=>d.type==='receivable').reduce((s,d)=>s+debtRemaining(d),0));
+ const history=document.getElementById('paymentHistory'),groups=state.paymentGroups.slice().sort((a,b)=>b.date.localeCompare(a.date));history.innerHTML=groups.length?groups.map(g=>`<div class="listitem"><div class="split"><b>${g.type==='owed'?'سداد دين':'تحصيل دين'} · ${cash(g.amount)}</b><span class="small">${esc(g.date)}</span></div><div class="small">${(g.allocations||[]).map(a=>{let d=state.debts.find(d=>String(d.id)===String(a.debtId));return `${esc(d?.name||'دين محذوف')}: ${cash(a.amount)}`;}).join(' · ')}</div>${g.note?`<div class="small">${esc(g.note)}</div>`:''}<div class="actions" style="margin-top:8px"><button class="btn soft mini" onclick="openPayment('${g.type}','${g.id}')">تعديل</button><button class="btn danger mini" onclick="deletePayment('${g.id}')">حذف</button></div></div>`).join(''):'<div class="empty">لا توجد دفعات مسجلة.</div>';
 }
-function removeDebt(id){
-  state.debts=state.debts.filter(x=>x.id!==id);
-  save();render();
-}
-
-function renderHistory(){
-  document.getElementById('histIncome').textContent=cash(state.salary);
-  document.getElementById('histCount').textContent=monthExpenses().length;
-  let arr=monthExpenses(),el=document.getElementById('historyList');
-  el.className=arr.length?'':'empty';
-  el.innerHTML=arr.length?arr.map(x=>{
-    let c=cats.find(c=>c.id===x.cat);
-    return `<div class="listitem row">
-      <div><strong style="font-size:13px">${esc(x.name)}</strong><div class="small">${x.date} · ${c?.name||''}</div></div>
-      <div class="row" style="gap:8px">
-        <b style="font-size:13px">− ${cash(x.amount)}</b>
-        <button class="btn soft" onclick="openEditExpense(${x.id})">تعديل</button>
-        <button class="close" onclick="deleteExpense(${x.id})">×</button>
-      </div>
-    </div>`;
-  }).join(''):'ستظهر عملياتك هنا.';
-}
-
-/* Monthly report */
-function reportPreviousMonth(key){
-  let p=key.split('-').map(Number),d=new Date(p[0],p[1]-2,1);
-  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
-}
-function reportMonthLabel(key){
-  let p=key.split('-').map(Number);
-  return new Date(p[0],p[1]-1,1).toLocaleDateString('ar-EG',{month:'long',year:'numeric'});
-}
+function previousMonth(m){let [y,mo]=m.split('-').map(Number),d=new Date(y,mo-2,1);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');}
+function monthLabel(m){let [y,mo]=m.split('-').map(Number);return new Date(y,mo-1,1).toLocaleDateString('ar-EG',{month:'long',year:'numeric'});}
 function renderReport(){
-  let input=document.getElementById('reportMonth');
-  if(!reportMonth)reportMonth=monthKey();
-  if(input&&input.value!==reportMonth)input.value=reportMonth;
-
-  let rows=state.expenses.filter(x=>(x.month||String(x.date||'').slice(0,7))===reportMonth);
-  let total=rows.reduce((a,x)=>a+(Number(x.amount)||0),0);
-  let income=Number(state.salary)||0;
-
-  document.getElementById('reportIncome').textContent=cash(income);
-  document.getElementById('reportSpent').textContent=cash(total);
-  document.getElementById('reportLeft').textContent=cash(income-total);
-  document.getElementById('reportCount').textContent=String(rows.length);
-
-  let groups=cats.map(c=>({
-    name:c.name,
-    color:c.color,
-    amount:rows.filter(x=>x.cat===c.id).reduce((a,x)=>a+(Number(x.amount)||0),0)
-  })).filter(c=>c.amount>0).sort((a,b)=>b.amount-a.amount);
-
-  document.getElementById('reportCategories').innerHTML=groups.length
-    ?groups.map(c=>{
-      let p=total?c.amount/total*100:0;
-      return `<div style="margin:0 0 15px">
-        <div class="row" style="justify-content:space-between">
-          <strong>${esc(c.name)}</strong><span>${cash(c.amount)} · ${p.toFixed(1)}%</span>
-        </div>
-        <div class="progress" style="margin-top:8px">
-          <i style="display:block;width:${p}%;height:100%;background:${c.color};border-radius:10px"></i>
-        </div>
-      </div>`;
-    }).join('')
-    :'<div class="empty">لا توجد مصروفات مسجلة في هذا الشهر.</div>';
-
-  let top=rows.slice().sort((a,b)=>(Number(b.amount)||0)-(Number(a.amount)||0))[0];
-  let tc=top?cats.find(c=>c.id===top.cat):null;
-  document.getElementById('reportTopExpense').innerHTML=top
-    ?`<strong>${esc(top.name||'مصروف')}</strong>
-      <div class="row" style="justify-content:space-between;margin-top:8px">
-        <span class="muted">${esc(tc?tc.name:'غير مصنف')} · ${esc(top.date||reportMonth)}</span>
-        <strong>${cash(top.amount)}</strong>
-      </div>`
-    :'<div class="empty">لا توجد مصروفات لعرض أكبر مصروف.</div>';
-
-  let prev=reportPreviousMonth(reportMonth);
-  let prevRows=state.expenses.filter(x=>(x.month||String(x.date||'').slice(0,7))===prev);
-  let prevTotal=prevRows.reduce((a,x)=>a+(Number(x.amount)||0),0);
-  let comparison='';
-
-  if(!prevTotal&&!total)comparison='لا توجد مصروفات في الشهرين.';
-  else if(!prevTotal)comparison='مصروفات هذا الشهر: '+cash(total)+'، ولا توجد مصروفات مسجلة في الشهر السابق.';
-  else{
-    let diff=total-prevTotal,p=Math.abs(diff)/prevTotal*100;
-    comparison=(diff>0?'زادت المصروفات ':'انخفضت المصروفات ')+cash(Math.abs(diff))+' ('+p.toFixed(1)+'%) مقارنة بشهر '+reportMonthLabel(prev)+'.';
-  }
-
-  document.getElementById('reportComparison').innerHTML=
-    '<div class="small muted">مقارنة '+reportMonthLabel(reportMonth)+' مع '+reportMonthLabel(prev)+'</div>'+
-    '<p style="margin:9px 0 0">'+comparison+'</p>'+
-    '<p class="small muted" style="margin:10px 0 0">تنبيه: الدخل المعروض هو الراتب المسجل حاليًا؛ التطبيق لا يحتفظ بسجل تاريخي لتغيّر الدخل.</p>';
-    }
-  function exportData(){
-  let blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
-  let url=URL.createObjectURL(blob),a=document.createElement('a');
-  a.href=url;
-  a.download='financial-freedom-backup.json';
-  a.click();
-  URL.revokeObjectURL(url);
-  toast('تم تجهيز النسخة الاحتياطية');
+ const input=document.getElementById('reportMonth');if(input&&input.value!==reportMonth)input.value=reportMonth;
+ const rows=state.expenses.filter(x=>monthKey(x.date)===reportMonth),total=rows.reduce((s,x)=>s+x.amount,0),income=state.salary;
+ document.getElementById('rIncome').textContent=cash(income);document.getElementById('rSpent').textContent=cash(total);document.getElementById('rLeft').textContent=cash(income-total);document.getElementById('rCount').textContent=rows.length;
+ const groups=CATS.map(c=>({c,amount:rows.filter(x=>x.cat===c.id).reduce((s,x)=>s+x.amount,0)})).filter(x=>x.amount>0).sort((a,b)=>b.amount-a.amount);
+ document.getElementById('rCats').innerHTML=groups.length?groups.map(x=>`<div style="margin-bottom:14px"><div class="split"><b>${x.c.name}</b><span>${cash(x.amount)} · ${total?(x.amount/total*100).toFixed(1):0}%</span></div><div class="chartline"><i style="width:${total?x.amount/total*100:0}%;background:${x.c.color}"></i></div></div>`).join(''):'<div class="empty">لا توجد مصروفات في هذا الشهر.</div>';
+ const prev=previousMonth(reportMonth),prevTotal=state.expenses.filter(x=>monthKey(x.date)===prev).reduce((s,x)=>s+x.amount,0),diff=total-prevTotal;
+ document.getElementById('rCompare').innerHTML=`<div class="small">مقارنة ${monthLabel(reportMonth)} مع ${monthLabel(prev)}</div><p>${!prevTotal&&!total?'لا توجد مصروفات في الشهرين.':!prevTotal?'مصروفات الشهر الحالي '+cash(total)+' ولا توجد مصروفات مسجلة في الشهر السابق.':`${diff>0?'زادت':'انخفضت'} المصروفات بمقدار ${cash(Math.abs(diff))} (${(Math.abs(diff)/prevTotal*100).toFixed(1)}%).`}</p><div class="small">ملاحظة: الدخل المعروض هو الدخل الحالي، ولا يحتفظ الإصدار السابق بسجل تاريخي لتغيّر الدخل.</div>`;
 }
-function resetData(){
-  if(confirm('متأكد إنك عايز تمسح كل بياناتك؟ لا يمكن التراجع.')){
-    state={salary:0,expenses:[],goals:[],debts:[]};
-    save();render();toast('تم مسح البيانات');
-  }
+document.getElementById('reportMonth').value=reportMonth;
+function renderHistory(){
+ const all=[...state.expenses.map(x=>({date:x.date,type:'مصروف',name:x.name,amount:x.amount})),...state.paymentGroups.map(g=>({date:g.date,type:g.type==='owed'?'سداد':'تحصيل',name:g.note||'دفعة دين',amount:g.amount})),...state.goals.filter(g=>g.manualSaved>0).map(g=>({date:'—',type:'ادخار يدوي',name:g.name,amount:g.manualSaved}))].sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+ document.getElementById('allHistory').innerHTML=all.length?all.map(x=>`<div class="listitem split"><div><b>${esc(x.name)}</b><div class="small">${esc(x.type)} · ${esc(x.date)}</div></div><strong>${cash(x.amount)}</strong></div>`).join(''):'<div class="empty">لا توجد عمليات بعد.</div>';
 }
-function esc(s){
-  return String(s).replace(/[&<>"']/g,c=>({
-    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-  }[c]));
-}
-
-/* Theme preference */
-function applyTheme(){
-  let dark=localStorage.getItem('financialFreedom.theme')==='dark';
-  document.body.classList.toggle('dark',dark);
-  let b=document.getElementById('themeToggle');
-  if(b){
-    b.textContent=dark?'☀️':'🌙';
-    b.setAttribute('aria-label',dark?'تفعيل الوضع الفاتح':'تفعيل الوضع الداكن');
-  }
-}
-function toggleTheme(){
-  let dark=!document.body.classList.contains('dark');
-  localStorage.setItem('financialFreedom.theme',dark?'dark':'light');
-  applyTheme();
-}
-
-applyTheme();
-document.getElementById('salary').value=state.salary;
-render();
+function exportBackup(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='financial-freedom-backup-'+today()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('تم تصدير النسخة الاحتياطية');}
+function importBackup(e){const file=e.target.files?.[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const incoming=JSON.parse(reader.result);if(!incoming||typeof incoming!=='object'||!Array.isArray(incoming.expenses)||!Array.isArray(incoming.goals)||!Array.isArray(incoming.debts))throw new Error('invalid');confirmModal('استيراد النسخة الاحتياطية','سيتم استبدال البيانات الحالية بالبيانات الموجودة في الملف. يُفضّل تصدير نسخة احتياطية أولًا. هل تريد المتابعة؟',()=>{try{localStorage.setItem(KEY,JSON.stringify(incoming));state=loadState();save();renderAll();toast('تم استيراد البيانات بنجاح');}catch(err){toast('تعذر استيراد النسخة');}},'استيراد واستبدال');}catch(err){toast('الملف غير صالح أو ليس نسخة من التطبيق');}e.target.value='';};reader.readAsText(file);}
+function confirmReset(){confirmModal('حذف جميع البيانات','سيتم حذف الدخل والمصروفات والأهداف والديون وسجل الدفعات نهائيًا من هذا الجهاز. ننصح بتصدير نسخة احتياطية أولًا.',()=>{state=defaultState();save();renderAll();toast('تم حذف البيانات');});}
+function applyTheme(){const dark=localStorage.getItem(THEME)==='dark';document.body.classList.toggle('dark',dark);document.getElementById('themeBtn').textContent=dark?'☀':'☾';}
+function toggleTheme(){localStorage.setItem(THEME,document.body.classList.contains('dark')?'light':'dark');applyTheme();}
+applyTheme();save();renderAll();
 </script>
 </body>
 </html>
-
-      
