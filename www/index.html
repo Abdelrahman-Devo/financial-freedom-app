@@ -115,15 +115,43 @@ button::-moz-focus-inner { border: 0; }
 .daily-chart-svg .bar.today{fill:#d9a441}
 .daily-chart-empty{padding:22px 8px;text-align:center;color:var(--muted);font-size:12px}
 .period-option{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+
+/* Final polish: compact header, branded daily date picker and fast theme switch */
+.toprow{gap:8px}.top-actions{gap:8px;align-items:center}
+.top-actions .topbtn{min-height:40px;height:40px;display:inline-flex;align-items:center;justify-content:center}
+.top-actions button[onclick="openBudget()"]{padding:0 12px;font-size:11px;min-width:112px;border-radius:12px}
+#themeBtn{width:40px;height:40px;min-width:40px;padding:8px;border-radius:13px;flex:0 0 40px}
+#themeBtn svg{width:22px;height:22px;transition:none}
+body,.top,.tabs,.summary,.panel,.cat,.stat{transition:background-color .12s ease,color .12s ease,border-color .12s ease,box-shadow .12s ease}
+.today-stamp{display:inline-flex;align-items:center;gap:6px;margin-top:7px;padding:4px 9px;border:1px solid #ffffff35;border-radius:20px;background:#ffffff12;color:#d8eee5;font-size:10px;line-height:1.4}
+.today-stamp:before{content:"";width:6px;height:6px;border-radius:50%;background:#e0bd69;box-shadow:0 0 0 3px #e0bd6925}
+.daily-income-date{max-width:100%;width:min(100%,360px);margin:13px 0 4px;gap:7px}
+.daily-income-date[hidden]{display:none!important}
+.daily-income-date>label{color:#d8eee5!important;font-size:11px!important}
+.daily-date-button{width:100%;min-height:48px;padding:0 14px;border:1px solid #ffffff50;border-radius:14px;background:linear-gradient(135deg,#ffffff20,#ffffff10);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:right;font-size:14px;font-weight:700;box-shadow:inset 0 1px 0 #ffffff18}
+.daily-date-button svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.7;flex:0 0 auto;opacity:.9}
+body.dark .daily-date-button{background:linear-gradient(135deg,#ffffff18,#ffffff0c);border-color:#ffffff35}
+.calendar-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:13px}
+.calendar-head strong{font-size:14px;color:var(--ink)}
+.calendar-head button{width:34px;height:34px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink);font-size:20px}
+.daily-calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;direction:rtl}
+.daily-calendar-grid .weekday{padding:7px 0;text-align:center;color:var(--muted);font-size:10px;font-weight:700}
+.daily-calendar-grid .day{height:39px;border:0;border-radius:11px;background:var(--bg);color:var(--ink);font-size:12px}
+.daily-calendar-grid .day.today{box-shadow:inset 0 0 0 1px var(--gold);color:var(--green);font-weight:850}
+.daily-calendar-grid .day.selected{background:var(--green)!important;color:#fff!important;box-shadow:none}
+.daily-calendar-grid .day:disabled{opacity:.25}
+.daily-calendar-actions{display:flex;justify-content:space-between;gap:8px;margin-top:15px}
+@media(max-width:390px){.top-actions{gap:6px}.top-actions button[onclick="openBudget()"]{min-width:104px;padding-inline:9px;font-size:10px}#themeBtn{width:38px;height:38px;min-width:38px;flex-basis:38px}.today-stamp{font-size:9px}.daily-date-button{min-height:45px}}
+
 </style>
 </head>
 <body>
 <header class="top">
  <div class="toprow">
-  <div><div class="brand"><span class="logo"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 24V8h4v12h4V13h4v7h4V5h4v19H5Z" fill="#fff" opacity=".28"/><path d="m7 21 7-7 5 3 7-9M20 8h6v6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>الحرية المالية</div><div class="sub">خطوة واعية نحو مستقبل أفضل</div></div>
+  <div><div class="brand"><span class="logo"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 24V8h4v12h4V13h4v7h4V5h4v19H5Z" fill="#fff" opacity=".28"/><path d="m7 21 7-7 5 3 7-9M20 8h6v6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>الحرية المالية</div><div class="sub">خطوة واعية نحو مستقبل أفضل</div><div class="today-stamp" id="todayStamp" aria-live="polite"></div></div>
   <div class="top-actions"><button class="topbtn" id="themeBtn" onclick="toggleTheme()" aria-label="تغيير المظهر">☾</button><button class="topbtn" onclick="openBudget()">توزيع الميزانية</button></div>
  </div>
- <div class="hero"><label id="incomeLabel">إجمالي دخلك الشهري</label><div class="salaryline"><input id="salary" type="number" min="0" step=".01" inputmode="decimal"><span>جنيه</span></div><div id="dailyIncomeDateWrap" class="field daily-income-date" hidden><label for="dailyIncomeDate">تاريخ الدخل</label><input id="dailyIncomeDate" type="date" dir="ltr"></div><div class="income-settings"><label>طريقة احتساب الدخل</label><div class="income-period" role="group" aria-label="طريقة احتساب الدخل"><button type="button" id="salaryMonthly" data-period="monthly" class="period-option">دخل شهري</button><button type="button" id="salaryDaily" data-period="daily" class="period-option">دخل يومي</button></div><span id="incomeHint">يُحتسب المبلغ كدخل شهري ثابت</span></div><div class="hint">يمكنك تعديل الدخل في أي وقت · بياناتك محفوظة على جهازك</div></div>
+ <div class="hero"><label id="incomeLabel">إجمالي دخلك الشهري</label><div class="salaryline"><input id="salary" type="number" min="0" step=".01" inputmode="decimal"><span>جنيه</span></div><div id="dailyIncomeDateWrap" class="field daily-income-date" hidden><label>تاريخ تسجيل الدخل</label><input id="dailyIncomeDate" type="date" dir="ltr" hidden><button type="button" id="dailyDateButton" class="daily-date-button" onclick="openDailyCalendar()"><span id="dailyDateText">تاريخ اليوم</span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M16 3v4M8 3v4M3 10h18"/></svg></button></div><div class="income-settings"><label>طريقة احتساب الدخل</label><div class="income-period" role="group" aria-label="طريقة احتساب الدخل"><button type="button" id="salaryMonthly" data-period="monthly" class="period-option">دخل شهري</button><button type="button" id="salaryDaily" data-period="daily" class="period-option">دخل يومي</button></div><span id="incomeHint">يُحتسب المبلغ كدخل شهري ثابت</span></div><div class="hint">يمكنك تعديل الدخل في أي وقت · بياناتك محفوظة على جهازك</div></div>
 </header>
 <main class="wrap">
 <section class="page active" id="homePage">
@@ -237,8 +265,8 @@ function goalSaved(g){return validNum(g.manualSaved)+allocatedForGoal(g.id);}
 function debtPaid(d){return state.paymentGroups.filter(g=>g.type===d.type).flatMap(g=>g.allocations||[]).filter(a=>String(a.debtId)===String(d.id)).reduce((s,a)=>s+validNum(a.amount),0);}
 function debtRemaining(d){return Math.max(0,d.total-debtPaid(d));}
 function renderAll(){
- const dailyMode=state.salaryPeriod==='daily',dailyDate=document.getElementById('dailyIncomeDate').value||today();document.getElementById('dailyIncomeDateWrap').hidden=!dailyMode;document.getElementById('dailyIncomeDate').value=dailyDate;document.getElementById('salary').value=dailyMode?(state.dailyIncomes[dailyDate]??''):state.salary;document.getElementById('salary').placeholder=dailyMode?'دخل هذا اليوم':'الدخل الشهري';document.getElementById('salaryMonthly').classList.toggle('active',!dailyMode);document.getElementById('salaryDaily').classList.toggle('active',dailyMode);document.getElementById('incomeLabel').textContent=dailyMode?'دخل اليوم المحدد':'إجمالي دخلك الشهري';document.getElementById('incomeHint').textContent=dailyMode?'سجّل دخل كل يوم على حدة؛ إجمالي الشهر هو مجموع الأيام المسجلة':'يُحتسب المبلغ كدخل شهري ثابت';
- const d=new Date();document.getElementById('monthLabel').textContent=d.toLocaleDateString('ar-EG',{month:'long',year:'numeric'});
+ const dailyMode=state.salaryPeriod==='daily',dailyDate=document.getElementById('dailyIncomeDate').value||today();document.getElementById('dailyIncomeDateWrap').hidden=!dailyMode;document.getElementById('dailyIncomeDate').value=dailyDate;const dateText=document.getElementById('dailyDateText');if(dateText)dateText.textContent=formatArabicDate(dailyDate);document.getElementById('salary').value=dailyMode?(state.dailyIncomes[dailyDate]??''):state.salary;document.getElementById('salary').placeholder=dailyMode?'دخل هذا اليوم':'الدخل الشهري';document.getElementById('salaryMonthly').classList.toggle('active',!dailyMode);document.getElementById('salaryDaily').classList.toggle('active',dailyMode);document.getElementById('incomeLabel').textContent=dailyMode?'دخل اليوم المحدد':'إجمالي دخلك الشهري';document.getElementById('incomeHint').textContent=dailyMode?'سجّل دخل كل يوم على حدة؛ إجمالي الشهر هو مجموع الأيام المسجلة':'يُحتسب المبلغ كدخل شهري ثابت';
+ const d=new Date();document.getElementById('monthLabel').textContent=d.toLocaleDateString('ar-EG',{month:'long',year:'numeric'});const stamp=document.getElementById('todayStamp');if(stamp)stamp.textContent='اليوم · '+formatArabicDate(today());
  renderHome();renderExpenses();renderGoals();renderDebts();renderReport();renderHistory();
 }
 function renderHome(){
@@ -256,10 +284,16 @@ function renderHome(){
  document.getElementById('debtQuick').textContent=cash(state.debts.filter(d=>d.type==='owed').reduce((s,d)=>s+debtRemaining(d),0));
 }
 document.getElementById('salary').addEventListener('change',e=>{const amount=Math.max(0,validNum(e.target.value));if(state.salaryPeriod==='daily'){const date=document.getElementById('dailyIncomeDate').value||today();state.dailyIncomes[date]=amount;}else{state.salary=amount;}save();renderAll();});
-document.getElementById('dailyIncomeDate').addEventListener('change',e=>{const date=e.target.value;if(!/^\d{4}-\d{2}-\d{2}$/.test(date))return;document.getElementById('salary').value=state.dailyIncomes[date]??'';document.getElementById('incomeLabel').textContent='دخل يوم '+date;});
+document.getElementById('dailyIncomeDate').addEventListener('change',e=>{const date=e.target.value;if(!/^\d{4}-\d{2}-\d{2}$/.test(date))return;document.getElementById('salary').value=state.dailyIncomes[date]??'';document.getElementById('dailyDateText').textContent=formatArabicDate(date);document.getElementById('incomeLabel').textContent='دخل يوم '+formatArabicDate(date);});
 document.getElementById('salaryMonthly').addEventListener('click',()=>setSalaryPeriod(document.getElementById('salaryMonthly').dataset.period));
 document.getElementById('salaryDaily').addEventListener('click',()=>setSalaryPeriod(document.getElementById('salaryDaily').dataset.period));
-function setSalaryPeriod(period){if(period!=='daily'&&period!=='monthly')return;state.salaryPeriod=period;save();renderAll();toast(period==='daily'?'تم تفعيل تسجيل الدخل اليومي':'تم تفعيل الدخل الشهري');}
+function setSalaryPeriod(period){if(period!=='daily'&&period!=='monthly')return;if(period==='daily')document.getElementById('dailyIncomeDate').value=today();state.salaryPeriod=period;save();renderAll();toast(period==='daily'?'تم تفعيل تسجيل الدخل اليومي':'تم تفعيل الدخل الشهري');}
+function formatArabicDate(value){const parts=String(value||today()).split('-').map(Number);if(parts.length!==3)return value;const d=new Date(parts[0],parts[1]-1,parts[2]);return d.toLocaleDateString('ar-EG',{weekday:'long',day:'numeric',month:'long',year:'numeric'});}
+let dailyCalendarYear=Number(today().slice(0,4)),dailyCalendarMonth=Number(today().slice(5,7))-1;
+function openDailyCalendar(){const value=document.getElementById('dailyIncomeDate').value||today();dailyCalendarYear=Number(value.slice(0,4));dailyCalendarMonth=Number(value.slice(5,7))-1;drawDailyCalendar();}
+function shiftDailyCalendar(delta){dailyCalendarMonth+=delta;if(dailyCalendarMonth<0){dailyCalendarMonth=11;dailyCalendarYear--;}if(dailyCalendarMonth>11){dailyCalendarMonth=0;dailyCalendarYear++;}drawDailyCalendar();}
+function drawDailyCalendar(){const selected=document.getElementById('dailyIncomeDate').value||today(),first=new Date(dailyCalendarYear,dailyCalendarMonth,1),count=new Date(dailyCalendarYear,dailyCalendarMonth+1,0).getDate(),offset=first.getDay(),names=['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];let cells=names.map(n=>`<div class="weekday">${n.slice(0,1)}</div>`).join('');for(let i=0;i<offset;i++)cells+='<span></span>';for(let day=1;day<=count;day++){const value=dailyCalendarYear+'-'+String(dailyCalendarMonth+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');cells+=`<button type="button" class="day ${value===today()?'today':''} ${value===selected?'selected':''}" onclick="selectDailyDate('${value}')">${day.toLocaleString('ar-EG')}</button>`;}openModal('اختيار تاريخ الدخل',`<div class="calendar-head"><button type="button" onclick="shiftDailyCalendar(-1)" aria-label="الشهر السابق">‹</button><strong>${monthNames[dailyCalendarMonth]} ${dailyCalendarYear}</strong><button type="button" onclick="shiftDailyCalendar(1)" aria-label="الشهر التالي">›</button></div><div class="daily-calendar-grid">${cells}</div><div class="daily-calendar-actions"><button type="button" class="btn ghost" onclick="selectDailyDate(today())">العودة لليوم</button><button type="button" class="btn primary" onclick="closeModal()">إغلاق</button></div>`);}
+function selectDailyDate(value){if(!/^\d{4}-\d{2}-\d{2}$/.test(value))return;document.getElementById('dailyIncomeDate').value=value;document.getElementById('dailyDateText').textContent=formatArabicDate(value);document.getElementById('salary').value=state.dailyIncomes[value]??'';document.getElementById('incomeLabel').textContent='دخل يوم '+formatArabicDate(value);closeModal();}
 function openBudget(){
  openModal('تعديل توزيع الميزانية',`<form id="budgetForm">${CATS.map(c=>`<div class="field"><label>${c.name} (%)</label><input type="number" min="0" max="100" step=".5" name="${c.id}" value="${state.budgets[c.id]}"></div>`).join('')}<div class="note" id="budgetTotal">المجموع الحالي: ${CATS.reduce((s,c)=>s+state.budgets[c.id],0)}%</div><div class="modal-actions"><button type="button" class="btn ghost" onclick="closeModal()">إلغاء</button><button class="btn primary">حفظ التوزيع</button></div></form>`);
  const form=document.getElementById('budgetForm'),total=()=>[...form.querySelectorAll('input')].reduce((s,i)=>s+validNum(i.value),0);
